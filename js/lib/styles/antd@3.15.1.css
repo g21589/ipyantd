@@ -51,6 +51,7 @@ section {
   display: block;
 }
 body {
+  /*
   margin: 0;
   color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
@@ -60,6 +61,10 @@ body {
   background-color: #fff;
   -webkit-font-feature-settings: 'tnum';
           font-feature-settings: 'tnum';
+  */
+}
+div.p-Widget {
+    overflow: visible !important;
 }
 [tabindex='-1']:focus {
   outline: none !important;

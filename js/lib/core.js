@@ -43,8 +43,9 @@ function RemoveNull(Component, attributes) {
         render() {
             let { ...cleanProps } = this.props;
             attributes.forEach((attribute) => {
-                if (cleanProps[attribute] === null)
+                if (cleanProps[attribute] === null) {
                     delete cleanProps[attribute]
+                }
             })
             return <Component {...cleanProps}>{cleanProps.children}</Component>
         }
@@ -56,8 +57,9 @@ function ClickHandler(Component) {
     return class extends BackboneWidget {
         onClickHandler = (event) => {
             this.props.model.send({ event: 'click' })
-            if (this.props.onClick)
+            if (this.props.onClick) {
                 this.props.onClick(event)
+            }
         }
         render() {
             return <Component {...this.props} onClick={this.onClickHandler}></Component>
@@ -68,12 +70,21 @@ function ClickHandler(Component) {
 function CheckedHandler(Component, attributeName = 'checked') {
     return class extends BackboneWidget {
         onChangeHandler = (event, value) => {
-            this.props.model.set(attributeName, event.target.checked);
+            console.log('onChangeHandler')
+            console.log(event)
+            if (event === true || event === false) {
+                this.props.model.set(attributeName, event);
+            } else {
+                this.props.model.set(attributeName, event.target.checked);
+            }
             this.props.model.save_changes()
-            if (this.props.onChange)
+            if (this.props.onChange) {
                 this.props.onChange(event, value)
+            }
         }
         render() {
+            console.log('CheckedHandler')
+            console.log(this.props)
             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
         }
     }
@@ -82,21 +93,28 @@ function CheckedHandler(Component, attributeName = 'checked') {
 function FixClickCapture(Component, attributeName = 'checked') {
     return class extends BackboneWidget {
         onClickHandler = (event, value) => {
-            if (this.props.onClick)
+            if (this.props.onClick) {
                 this.props.onClick(event, value)
+            }
         }
         onClickCaptureHandler = (event, value) => {
-            if (this.props.clickFix)
+            if (this.props.clickFix) {
                 event.stopPropagation()
+            }
             // if(this.props.onClickCapture)
             //    this.props.onClickCapture(event, value)
         }
         render() {
             const { clickFix, ...props } = this.props;
-            if (clickFix)
+            if (clickFix) {
+                console.log('FixClickCapture AAA')
+                console.log(props)
                 return <div onClick={this.onClickHandler} onClickCapture={this.onClickCaptureHandler}><Component {...props} ></Component></div>
-            else
+            } else {
+                console.log('FixClickCapture BBB')
+                console.log(props)
                 return <Component {...props} ></Component>
+            }
         }
     }
 }
@@ -314,13 +332,21 @@ export
 */
 
 // Button
-//import Button from '@material-ui/core/Button';
 import { Button } from 'antd';
 export
     class ButtonModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, exclusive: false } };
     autoProps = ['value', 'exclusive']
     reactComponent = () => ClickWidget(Button)
+}
+
+// Switch
+import { Switch } from 'antd';
+export
+    class SwitchModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null, checked: false } };
+    autoProps = ['value', 'checked', 'checkedChildren', 'unCheckedChildren']
+    reactComponent = () => FixClickCapture(CheckedWidget(Switch))
 }
 
 /*
@@ -375,15 +401,6 @@ export
     defaults = () => { return { ...super.defaults(), value: null, exclusive: false } };
     autoProps = ['value', 'exclusive']
     reactComponent = () => ToggleButtonGroupWidget(RadioGroup)
-}
-
-// Switch
-import Switch from '@material-ui/core/Switch';
-export
-    class SwitchModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null, selected: false } };
-    autoProps = ['value', 'checked']
-    reactComponent = () => FixClickCapture(CheckedWidget(Switch))
 }
 
 // FormControlLabel

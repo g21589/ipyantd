@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/g21589/ipyantd.git"
   },
+  "license": "MIT",
   "keywords": [
     "jupyter",
     "widgets",

@@ -64,3 +64,13 @@ class ButtonBase(ReactWidget, ClickMixin):
 
 class Button(ButtonBase):
     _model_name = Unicode('ButtonModel').tag(sync=True)
+
+class Switch(ButtonBase, ValueMixin):
+    _model_name = Unicode('SwitchModel').tag(sync=True)
+    checked = CBool(None, allow_none=True, help="checked or not").tag(sync=True)
+    checked_children = Unicode('On', help="content to be shown when the state is checked").tag(sync=True)
+    un_checked_children = Unicode('Off', help="content to be shown when the state is unchecked").tag(sync=True)
+    
+#class Transfer(ReactWidget):
+#   _model_name = Unicode('TransferModel').tag(sync=True)
+    

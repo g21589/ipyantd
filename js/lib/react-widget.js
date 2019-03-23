@@ -6,26 +6,7 @@ import * as widgets from '@jupyter-widgets/base';
 
 // TODO: this part should be notebook only, since its fontsize is non-16
 // jupyter notebook (classical) fontfix
-/*
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-
-const theme = createMuiTheme({
-    typography: {
-        // Tell Material-UI what the font-size on the html element is.
-        htmlFontSize: 10,
-        useNextVariants: true,
-    },
-});
-
-function FontSizeTheme(props) {
-    return (
-        <MuiThemeProvider theme={theme}>
-            <Typography component="span">{props.children}</Typography>
-        </MuiThemeProvider>
-    );
-}
-*/
+import { Typography } from 'antd';
 
 // TODO: move Material-UI specific parts (such as style) to subclass
 export
@@ -45,25 +26,41 @@ export
     reactComponent = () => Dummy
     getProps = () => { return { model: this, ...this.genProps() } }
     genProps(props) {
+        
+        console.log("--- genProps(props) ---")
+        console.log("props:", props)
+        console.log("this.props:", this.props)
+        
         let newProps = {};
-        if (props)
+        if (props) {
             newProps = { ...props };
+        }
+        
         if (this.props) {
-            this.props.forEach((key) => {
+            this.props.forEach((key, idx) => {
                 if (!(key in this.autoProps)) {
-                    console.console.warn('Property \"', key, '\" found in (React) props, but not marked as widget property');
+                    console.warn('Property \"', key, '\" found in (React) props, but not marked as widget property');
                 }
             })
         }
+        
         const autoProps = ['style', ...this.autoProps]
-        autoProps.forEach((key) => {
+        autoProps.forEach((key, idx) => {
             let attribute_key = snakeCase(key);
-            if (props && key in props) // sync back to backbone/widget
+            console.log("  > ", idx, key, attribute_key)
+            
+            if (props && key in props) { // sync back to backbone/widget
+                console.log("this.set(attribute_key, props[key])")
                 this.set(attribute_key, props[key])
+            }
             newProps[key] = this.get(attribute_key)
-            if (newProps[key] && this.widgetProps && this.widgetProps.indexOf(key) !== -1)
+            
+            if (newProps[key] && this.widgetProps && this.widgetProps.indexOf(key) !== -1) {
+                console.log("newProps[key] = newProps[key].createWrappedReactElement()")
                 newProps[key] = newProps[key].createWrappedReactElement()
+            }
         })
+        console.log(newProps)
         return newProps
     }
     createWrappedReactElement(props) {
