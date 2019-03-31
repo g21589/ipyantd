@@ -14,7 +14,6 @@ class BackboneWidget extends React.Component {
     }
     stateProps() {
         return { ...this.props, ...this.model.getProps(), children: this.model.getChildren() }
-
     }
     componentDidMount() {
         this.updateCallback = () => {
@@ -22,7 +21,6 @@ class BackboneWidget extends React.Component {
         }
         this.props.model.on('change', this.updateCallback)
     }
-
     componentWillUnmount() {
         this.props.model.off('change', this.updateCallback)
     }
@@ -129,8 +127,9 @@ function ToggleHandler(Component, attributeName = 'selected') {
                 this.props.model.set(attributeName, !this.props.model.get(attributeName))
                 this.props.model.save_changes();
             }
-            if (this.props.onChange)
+            if (this.props.onChange) {
                 this.props.onChange(event, value)
+            }
         }
         render() {
             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
@@ -143,8 +142,9 @@ function ValueHandler(Component, attributeName = 'value') {
         onChangeHandler = (event, value) => {
             this.props.model.set(attributeName, value)
             this.props.model.save_changes()
-            if (this.props.onChange)
+            if (this.props.onChange) {
                 this.props.onChange(event, value)
+            }
         }
         render() {
             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
@@ -208,11 +208,10 @@ class MenuDecorator extends React.Component {
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
-                >{menuItems
-                    }</Menu>
+                >
+                    {menuItems}
+                </Menu>
             </div>
-            /*
-                */
         );
     }
 }
@@ -235,8 +234,9 @@ function MenuHandler(Component) {
 function ToggleButtonGroupHandler(Component, attributeName = 'selected') {
     return class extends BackboneWidget {
         onChangeHandler = (event, value) => {
-            if (value && value.props && value.props)
+            if (value && value.props && value.props) {
                 value = value.props.value; // sometimes values is the widget
+            }
             this.props.model.set('value', value)
             this.props.model.save_changes()
             // MUI's ToggleButtonGroup's behaviour doesn't play well with how we do things
@@ -265,22 +265,29 @@ function SelectHandler(Component) {
         onChangeHandler = (event, element) => {
             // if(value && value.props && value.props)
             //     value = value.props.value; // sometimes values is the widget
-            this.props.model.set('value', event.target.value)
-            this.props.model.save_changes()
+            //this.props.model.set('value', event.target.value)
+            //this.props.model.save_changes()
+            console.log('SelectHandler>onChangeHandler', event, element);
+            if (this.props.onChange) {
+                console.log('onChange AAA', event, element);
+                this.props.onChange(event, value)
+            }
         }
         render() {
-            let multiple = this.props.model.get('multiple')
+            /*
+            let mode = this.props.model.get('mode')
             let value = this.props.model.get('value')
             let children = this.props.model.get('children') || [];
             children.forEach((child) => {
                 // if(child instanceof ToggleButtonModel) {
-                if (multiple) {
+                if (mode !== 'default') {
                     child.set('selected', value && value.indexOf(child.get('value')) !== -1)
                 } else {
                     child.set('selected', value === child.get('value'))
                 }
                 // }
             })
+            */
             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
         }
     }
@@ -349,15 +356,32 @@ export
     reactComponent = () => FixClickCapture(CheckedWidget(Switch))
 }
 
-/*
 // Checkbox
-import Checkbox from '@material-ui/core/Checkbox';
+import { Checkbox } from 'antd';
 export
     class CheckboxModel extends ReactModel {
-    autoProps = ['value', 'checked'];//, 'icon', 'checkedIcon']
-    reactComponent = () => RemoveNull(CheckedWidget(Checkbox), ['icon', 'checkedIcon'])
+    autoProps = ['value', 'checked'];
+    reactComponent = () => CheckedWidget(Checkbox)
 }
 
+// Select
+import { Select } from 'antd';
+export
+    class SelectModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null, mode: 'default' } };
+    autoProps = ['value', 'mode']
+    reactComponent = () => SelectHandler(BasicWidget(Select))
+    //reactComponent = () => BasicWidget(Select)
+}
+
+export
+    class SelectOptionModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null, key: '0' } };
+    autoProps = ['value', 'key']
+    reactComponent = () => BasicWidget(Select.Option)
+}
+
+/*
 // Chip
 import Chip from '@material-ui/core/Chip';
 export
@@ -472,15 +496,6 @@ export
     defaults = () => { return { ...super.defaults(), value: null, exclusive: false } };
     autoProps = ['primary', 'secondary']
     reactComponent = () => BasicWidget(ListItemText)
-}
-
-// Select
-import Select from '@material-ui/core/Select';
-export
-    class SelectModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null, exclusive: false, autoWidth: true } };
-    autoProps = ['value', 'multiple', 'autoWidth']
-    reactComponent = () => SelectHandler(BasicWidget(Select))
 }
 
 // FormControl

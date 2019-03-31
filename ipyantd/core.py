@@ -19,8 +19,10 @@ class ReactWidget(widgets.DOMWidget, ClickMixin):
     _model_module = Unicode('ipyantd').tag(sync=True)
     _view_module_version = Unicode('^0.1.0').tag(sync=True)
     _model_module_version = Unicode('^0.1.0').tag(sync=True)
-    child = Instance('ipywidgets.widgets.domwidget.DOMWidget', default_value=None, allow_none=True).tag(sync=True, **widget_serialization).tag(sync=True)
-    children = TypedTuple(trait=Instance('ipywidgets.widgets.domwidget.DOMWidget'), help="children", default=[], allow_none=True).tag(sync=True, **widget_serialization).tag(sync=True)
+    child = Instance('ipywidgets.widgets.domwidget.DOMWidget', default_value=None, allow_none=True)\
+                .tag(sync=True, **widget_serialization).tag(sync=True)
+    children = TypedTuple(trait=Instance('ipywidgets.widgets.domwidget.DOMWidget'), help="children", default=[], allow_none=True)\
+                .tag(sync=True, **widget_serialization).tag(sync=True)
     visible = CBool(True).tag(sync=True)
     content = Unicode(help="").tag(sync=True)
     style = Dict().tag(sync=True)
@@ -70,7 +72,24 @@ class Switch(ButtonBase, ValueMixin):
     checked = CBool(None, allow_none=True, help="checked or not").tag(sync=True)
     checked_children = Unicode('On', help="content to be shown when the state is checked").tag(sync=True)
     un_checked_children = Unicode('Off', help="content to be shown when the state is unchecked").tag(sync=True)
-    
+
+class Checkbox(ReactWidget):
+    _model_name = Unicode('CheckboxModel').tag(sync=True)
+    description = Unicode(help="Menu item").tag(sync=True)
+    selected = CBool(help="selected or not").tag(sync=True)
+    checked = CBool(help="checked or not").tag(sync=True)
+
+class Select(ReactWidget, ValueMixin):
+    _model_name = Unicode('SelectModel').tag(sync=True)
+    description = Unicode(help="Select").tag(sync=True)
+    mode = Unicode('default', help='Set mode of Select').tag(sync=True)
+
+class SelectOption(ReactWidget, ValueMixin, Selectable):
+    _model_name = Unicode('SelectOptionModel').tag(sync=True)
+    description = Unicode(help="SelectOption").tag(sync=True)
+    key = Unicode(help="SelectOption key").tag(sync=True)
+    selected = CBool(help="selected or not").tag(sync=True)  # if removed, traitlets goes to inf recursion
+
 #class Transfer(ReactWidget):
 #   _model_name = Unicode('TransferModel').tag(sync=True)
     
