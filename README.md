@@ -1,5 +1,6 @@
 ipyantd
 ===============================
+[![PyPI version](https://badge.fury.io/py/ipyantd.svg)](https://badge.fury.io/py/ipyantd)
 
 Ant Design Jupyter Widget
 

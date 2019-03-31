@@ -260,38 +260,39 @@ function ToggleButtonGroupHandler(Component, attributeName = 'selected') {
     }
 }
 
+import { Select } from 'antd';
+const Option = Select.Option;
+
 function SelectHandler(Component) {
     return class extends BackboneWidget {
-        onChangeHandler = (event, element) => {
-            // if(value && value.props && value.props)
-            //     value = value.props.value; // sometimes values is the widget
-            //this.props.model.set('value', event.target.value)
-            //this.props.model.save_changes()
-            console.log('SelectHandler>onChangeHandler', event, element);
-            if (this.props.onChange) {
-                console.log('onChange AAA', event, element);
-                this.props.onChange(event, value)
-            }
+        onChangeHandler = (value) => {
+            console.log(`selected ${value}`);
+            this.props.model.set('value', value);
+            this.props.model.save_changes();
         }
         render() {
-            /*
-            let mode = this.props.model.get('mode')
-            let value = this.props.model.get('value')
-            let children = this.props.model.get('children') || [];
-            children.forEach((child) => {
-                // if(child instanceof ToggleButtonModel) {
-                if (mode !== 'default') {
-                    child.set('selected', value && value.indexOf(child.get('value')) !== -1)
-                } else {
-                    child.set('selected', value === child.get('value'))
-                }
-                // }
-            })
-            */
-            return <Component {...this.props} onChange={this.onChangeHandler}></Component>
+            console.log('SelectHandler2 > render', Component);
+
+            let value = this.props.model.get('value');
+            let options = this.props.model.get('options') || [];
+            let mode = this.props.model.get('mode');
+            let style = this.props.model.get('style');
+            
+            return (
+                <Select
+                    mode={mode}
+                    style={style}
+                    placeholder="Please select"
+                    defaultValue={value}
+                    onChange={this.onChangeHandler}
+                >
+                    {options.map(option => <Option key={option}>{option}</Option>)}
+                </Select>
+            );
         }
     }
 }
+
 // function IndexValueHandler(Component, attributeName='value') {
 //     return class extends BackboneWidget {
 //         onChangeHandler = (event, value) => {
@@ -365,13 +366,13 @@ export
 }
 
 // Select
-import { Select } from 'antd';
+//import { Select } from 'antd';
 export
     class SelectModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null, mode: 'default' } };
-    autoProps = ['value', 'mode']
-    reactComponent = () => SelectHandler(BasicWidget(Select))
-    //reactComponent = () => BasicWidget(Select)
+    defaults = () => { return { ...super.defaults(), options: [], value: null, mode: 'default' } };
+    autoProps = ['value', 'options', 'mode']
+    //reactComponent = () => SelectHandler(BasicWidget(Select))
+    reactComponent = () => SelectHandler(Select)
 }
 
 export

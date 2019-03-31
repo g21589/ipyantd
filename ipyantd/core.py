@@ -82,6 +82,7 @@ class Checkbox(ReactWidget):
 class Select(ReactWidget, ValueMixin):
     _model_name = Unicode('SelectModel').tag(sync=True)
     description = Unicode(help="Select").tag(sync=True)
+    options = Any(help="options of the widget").tag(sync=True, **widget_serialization)
     mode = Unicode('default', help='Set mode of Select').tag(sync=True)
 
 class SelectOption(ReactWidget, ValueMixin, Selectable):
