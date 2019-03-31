@@ -366,7 +366,6 @@ export
 }
 
 // Select
-//import { Select } from 'antd';
 export
     class SelectModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), options: [], value: null, mode: 'default' } };
@@ -375,11 +374,55 @@ export
     reactComponent = () => SelectHandler(Select)
 }
 
+// SelectOption
 export
     class SelectOptionModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, key: '0' } };
     autoProps = ['value', 'key']
     reactComponent = () => BasicWidget(Select.Option)
+}
+
+// DatePicker
+import { DatePicker } from 'antd';
+const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+export
+    class DatePickerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => ValueWidget(DatePicker)
+}
+
+// MonthPicker
+export
+    class MonthPickerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => ValueWidget(MonthPicker)
+}
+
+// RangePicker
+export
+    class RangePickerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => ValueWidget(RangePicker)
+}
+
+// WeekPicker
+export
+    class WeekPickerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => ValueWidget(WeekPicker)
+}
+
+// WeekPicker
+import { Progress } from 'antd';
+export
+    class ProgressModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => ValueWidget(Progress)
 }
 
 /*

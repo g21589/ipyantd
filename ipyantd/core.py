@@ -1,5 +1,5 @@
 import ipywidgets as widgets
-from traitlets import Unicode, Instance, CBool, CInt, HasTraits, Any, Dict
+from traitlets import Unicode, Instance, CBool, CInt, CFloat, HasTraits, Any, Dict
 from ipywidgets.widgets.widget import widget_serialization
 from ipywidgets.widgets.trait_types import TypedTuple
 from .mixins import ClickMixin
@@ -90,6 +90,28 @@ class SelectOption(ReactWidget, ValueMixin, Selectable):
     description = Unicode(help="SelectOption").tag(sync=True)
     key = Unicode(help="SelectOption key").tag(sync=True)
     selected = CBool(help="selected or not").tag(sync=True)  # if removed, traitlets goes to inf recursion
+
+class DatePicker(ReactWidget, ValueMixin):
+    _model_name = Unicode('DatePickerModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+
+class MonthPicker(ReactWidget, ValueMixin):
+    _model_name = Unicode('MonthPickerModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+
+class RangePicker(ReactWidget, ValueMixin):
+    _model_name = Unicode('RangePickerModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+
+class WeekPicker(ReactWidget, ValueMixin):
+    _model_name = Unicode('WeekPickerModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+
+class Progress(ReactWidget, ValueMixin):
+    _model_name = Unicode('ProgressModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+    ptype = Unicode(help="ptype").tag(sync=True)
+    percent = CFloat(help="percent").tag(sync=True)
 
 #class Transfer(ReactWidget):
 #   _model_name = Unicode('TransferModel').tag(sync=True)
