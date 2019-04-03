@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as widgets from '@jupyter-widgets/base';
+import moment from 'moment';
 import { ReactModel } from './react-widget';
 import './styles/antd@3.15.1.css';
+
+
 //import IconCircle from '@material-ui/icons/Brightness1'
 //import IconCircleBorder from '@material-ui/icons/Brightness1Outlined'
 
@@ -140,6 +143,7 @@ function ToggleHandler(Component, attributeName = 'selected') {
 function ValueHandler(Component, attributeName = 'value') {
     return class extends BackboneWidget {
         onChangeHandler = (event, value) => {
+            // Sync: React -> Backbone Model -> Python
             this.props.model.set(attributeName, value)
             this.props.model.save_changes()
             if (this.props.onChange) {
@@ -147,6 +151,27 @@ function ValueHandler(Component, attributeName = 'value') {
             }
         }
         render() {
+            // Sync: Python -> Backbone Model -> React
+            return <Component {...this.props} onChange={this.onChangeHandler}></Component>
+        }
+    }
+}
+
+function MomentValueHandler(Component) {
+    return class extends BackboneWidget {
+        onChangeHandler = (date, dateString) => {
+            console.log('MomentValueHandler > onChangeHandler');
+            this.props.model.set('value', dateString)
+            this.props.model.save_changes()
+            if (this.props.onChange) {
+                console.log('MomentValueHandler > onChangeHandler > if (this.props.onChange)');
+                this.props.onChange(date, dateString)
+            }
+        }
+        render() {
+            console.log('MomentValueHandler > render');
+            console.log(this.props);
+            this.props.value = moment(this.props.model.get('value'));
             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
         }
     }
@@ -387,40 +412,40 @@ import { DatePicker } from 'antd';
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 export
     class DatePickerModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null } };
+    defaults = () => { return { ...super.defaults(), value: '' } };
     autoProps = ['value']
-    reactComponent = () => ValueWidget(DatePicker)
+    reactComponent = () => MomentValueHandler(DatePicker)
 }
 
 // MonthPicker
 export
     class MonthPickerModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null } };
+    defaults = () => { return { ...super.defaults(), value: '' } };
     autoProps = ['value']
-    reactComponent = () => ValueWidget(MonthPicker)
+    reactComponent = () => MomentValueHandler(MonthPicker)
 }
 
 // RangePicker
 export
     class RangePickerModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null } };
+    defaults = () => { return { ...super.defaults(), value: '' } };
     autoProps = ['value']
-    reactComponent = () => ValueWidget(RangePicker)
+    reactComponent = () => MomentValueHandler(RangePicker)
 }
 
 // WeekPicker
 export
     class WeekPickerModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null } };
+    defaults = () => { return { ...super.defaults(), value: '' } };
     autoProps = ['value']
-    reactComponent = () => ValueWidget(WeekPicker)
+    reactComponent = () => MomentValueHandler(WeekPicker)
 }
 
-// WeekPicker
+// Progress
 import { Progress } from 'antd';
 export
     class ProgressModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null } };
+    defaults = () => { return { ...super.defaults(), value: '' } };
     autoProps = ['value']
     reactComponent = () => ValueWidget(Progress)
 }
@@ -478,7 +503,7 @@ export
     defaults = () => { return { ...super.defaults(), value: null, exclusive: false } };
     autoProps = ['control', 'label']
     widgetProps = ['control']
-    // getProps() { 
+    // getProps() {
     //     let props = super.getProps()
     //     props.control = props.control.createWrappedReactElement()
     // }
@@ -592,7 +617,6 @@ export
     reactComponent = () => BasicWidget(Tab)
 }
 */
-
 // import SvgIcon from '@material-ui/core/SvgIcon';
 // export
 // class SvgIconModel extends ReactModel {
@@ -600,8 +624,6 @@ export
 //     autoProps = ['width', 'height']
 //     reactComponent = () => ClickWidget(SvgIcon)
 // }
-
-
 // // import IconButton from '@material-ui/core/IconButton';
 // class IconButtonModel extends ReactModel {
 //     createReactComponent() {
@@ -612,8 +634,6 @@ export
 //     ...ReactModel.serializers,
 //     icon: {deserialize: widgets.unpack_models},
 // };
-
-
 // import Icon from '@material-ui/core/Icon';
 /*
 class IconWidget extends BackboneWidget {
