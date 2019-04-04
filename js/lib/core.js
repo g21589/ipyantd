@@ -161,17 +161,30 @@ function MomentValueHandler(Component) {
     return class extends BackboneWidget {
         onChangeHandler = (date, dateString) => {
             console.log('MomentValueHandler > onChangeHandler');
-            this.props.model.set('value', dateString)
-            this.props.model.save_changes()
+            if (Component === RangePicker) {
+                this.props.model.set('start_time', dateString[0]);
+                this.props.model.set('end_time', dateString[1]);
+            } else if (Component === WeekPicker) {
+                //this.props.value = date;
+            } else {
+                this.props.model.set('value', dateString);
+            }
+            this.props.model.save_changes();
             if (this.props.onChange) {
                 console.log('MomentValueHandler > onChangeHandler > if (this.props.onChange)');
-                this.props.onChange(date, dateString)
+                this.props.onChange(date, dateString);
             }
         }
         render() {
             console.log('MomentValueHandler > render');
             console.log(this.props);
-            this.props.value = moment(this.props.model.get('value'));
+            if (Component === RangePicker) {
+                this.props.value = [moment(this.props.model.get('start_time')), moment(this.props.model.get('end_time'))];
+            } else if (Component === WeekPicker) {
+                this.props.value = moment(this.props.model.get('value'), 'YYYY-wo');
+            } else {
+                this.props.value = moment(this.props.model.get('value'));
+            }
             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
         }
     }

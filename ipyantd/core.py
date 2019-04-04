@@ -94,6 +94,7 @@ class SelectOption(ReactWidget, ValueMixin, Selectable):
 class DatePicker(ReactWidget, ValueMixin):
     _model_name = Unicode('DatePickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
+    time_format = Unicode(help="time_format").tag(sync=True)
 
 class MonthPicker(ReactWidget, ValueMixin):
     _model_name = Unicode('MonthPickerModel').tag(sync=True)
@@ -102,6 +103,8 @@ class MonthPicker(ReactWidget, ValueMixin):
 class RangePicker(ReactWidget, ValueMixin):
     _model_name = Unicode('RangePickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
+    start_time = Unicode(help="start_time").tag(sync=True)
+    end_time = Unicode(help="end_time").tag(sync=True)
 
 class WeekPicker(ReactWidget, ValueMixin):
     _model_name = Unicode('WeekPickerModel').tag(sync=True)
