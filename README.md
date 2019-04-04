@@ -20,3 +20,15 @@ For a development installation (requires npm),
     $ pip install -e .
     $ jupyter nbextension install --py --symlink --sys-prefix ipyantd
     $ jupyter nbextension enable --py --sys-prefix ipyantd
+
+Support Components
+------------
+
+|  Component | Support functions |
+|:----------:|:-----------------:|
+| Button     |     essential     |
+| Switch     |     essential     |
+| Checkbox   |     essential     |
+| Select     |     essential     |
+| DatePicker |     essential     |
+| Progress   |     essential     |

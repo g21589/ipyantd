@@ -110,11 +110,12 @@ class WeekPicker(ReactWidget, ValueMixin):
     _model_name = Unicode('WeekPickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
 
-class Progress(ReactWidget, ValueMixin):
+class Progress(ReactWidget):
     _model_name = Unicode('ProgressModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
-    ptype = Unicode(help="ptype").tag(sync=True)
     percent = CFloat(help="percent").tag(sync=True)
+    type = Unicode(help="type").tag(sync=True)
+    
 
 #class Transfer(ReactWidget):
 #   _model_name = Unicode('TransferModel').tag(sync=True)

@@ -458,9 +458,9 @@ export
 import { Progress } from 'antd';
 export
     class ProgressModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: '' } };
-    autoProps = ['value']
-    reactComponent = () => ValueWidget(Progress)
+    defaults = () => { return { ...super.defaults(), percent: 50.0, type: 'line'} };
+    autoProps = ['percent', 'type']
+    reactComponent = () => BasicWidget(Progress)
 }
 
 /*
