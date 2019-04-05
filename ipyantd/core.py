@@ -8,7 +8,10 @@ class ValueMixin(HasTraits):
     value = Any(help="value of the widget").tag(sync=True, **widget_serialization)
 
 class LabelMixin:
-    label = Unicode(help="value of the widget").tag(sync=True)
+    label = Unicode(help="label of the widget").tag(sync=True)
+
+class SizeMixin:
+    size = Unicode(help="size of the widget").tag(sync=True)
 
 @widgets.register
 class ReactWidget(widgets.DOMWidget, ClickMixin):
@@ -115,7 +118,28 @@ class Progress(ReactWidget):
     description = Unicode(help="description").tag(sync=True)
     percent = CFloat(help="percent").tag(sync=True)
     type = Unicode(help="type").tag(sync=True)
-    
+
+class Steps(ReactWidget):
+    _model_name = Unicode('StepsModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+    current = CInt(help="current").tag(sync=True)
+    direction = Unicode('horizontal', allow_none=True, help="direction").tag(sync=True)
+
+# class Steps(ReactWidget, SizeMixin):
+#     _model_name = Unicode('StepsModel').tag(sync=True)
+#     current = CInt(help="current").tag(sync=True)
+#     direction = Unicode(help="direction").tag(sync=True)
+#     label_placement = Unicode(help="label_placement").tag(sync=True)
+#     progress_dot = CBool(help="progress_dot").tag(sync=True)
+#     status = Unicode(help="status").tag(sync=True)
+#     initial = CInt(help="current").tag(sync=True)
+
+class Step(ReactWidget):
+    _model_name = Unicode('StepModel').tag(sync=True)
+    description = Unicode(None, allow_none=True, help="description").tag(sync=True)
+    icon = Unicode(None, allow_none=True, help="icon").tag(sync=True)
+    status = Unicode('wait', allow_none=True, help="status").tag(sync=True)
+    title = Unicode(help="title").tag(sync=True)
 
 #class Transfer(ReactWidget):
 #   _model_name = Unicode('TransferModel').tag(sync=True)

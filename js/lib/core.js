@@ -463,6 +463,23 @@ export
     reactComponent = () => BasicWidget(Progress)
 }
 
+// Steps
+import { Steps } from 'antd';
+const Step = Steps.Step;
+export
+    class StepsModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), current: 0, direction: 'horizontal'} };
+    autoProps = ['current', 'direction']
+    reactComponent = () => BasicWidget(Steps)
+}
+
+export
+    class StepModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), title: '', description: '', status: 'wait', icon: ''} };
+    autoProps = ['title', 'description', 'status', 'icon']
+    reactComponent = () => BasicWidget(Step)
+}
+
 /*
 // Chip
 import Chip from '@material-ui/core/Chip';
