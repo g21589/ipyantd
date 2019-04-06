@@ -468,15 +468,15 @@ import { Steps } from 'antd';
 const Step = Steps.Step;
 export
     class StepsModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), current: 0, direction: 'horizontal'} };
-    autoProps = ['current', 'direction']
+    defaults = () => { return { ...super.defaults(), current: 0, direction: 'horizontal', progressDot: false, initial: 0, size: 'default'} };
+    autoProps = ['current', 'direction', 'progressDot', 'initial', 'size']
     reactComponent = () => BasicWidget(Steps)
 }
 
 export
     class StepModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), title: '', description: '', status: 'wait', icon: ''} };
-    autoProps = ['title', 'description', 'status', 'icon']
+    defaults = () => { return { ...super.defaults(), title: '', description: ''/*, status: null, icon: null*/} };
+    autoProps = ['title', 'description'] //, 'status', 'icon']
     reactComponent = () => BasicWidget(Step)
 }
 

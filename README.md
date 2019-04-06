@@ -32,3 +32,4 @@ Support Components
 | Select     |     essential     |
 | DatePicker |     essential     |
 | Progress   |     essential     |
+| Steps      |     essential     |

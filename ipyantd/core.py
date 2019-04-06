@@ -11,7 +11,7 @@ class LabelMixin:
     label = Unicode(help="label of the widget").tag(sync=True)
 
 class SizeMixin:
-    size = Unicode(help="size of the widget").tag(sync=True)
+    size = Unicode('default', allow_none=True, help="size of the widget").tag(sync=True)
 
 @widgets.register
 class ReactWidget(widgets.DOMWidget, ClickMixin):
@@ -119,26 +119,21 @@ class Progress(ReactWidget):
     percent = CFloat(help="percent").tag(sync=True)
     type = Unicode(help="type").tag(sync=True)
 
-class Steps(ReactWidget):
+class Steps(ReactWidget, SizeMixin):
     _model_name = Unicode('StepsModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
     current = CInt(help="current").tag(sync=True)
     direction = Unicode('horizontal', allow_none=True, help="direction").tag(sync=True)
-
-# class Steps(ReactWidget, SizeMixin):
-#     _model_name = Unicode('StepsModel').tag(sync=True)
-#     current = CInt(help="current").tag(sync=True)
-#     direction = Unicode(help="direction").tag(sync=True)
-#     label_placement = Unicode(help="label_placement").tag(sync=True)
-#     progress_dot = CBool(help="progress_dot").tag(sync=True)
-#     status = Unicode(help="status").tag(sync=True)
-#     initial = CInt(help="current").tag(sync=True)
+    label_placement = Unicode(None, allow_none=True, help="label_placement").tag(sync=True)
+    progress_dot = CBool(False, allow_none=True, help="progress_dot").tag(sync=True)
+    status = Unicode(None, allow_none=True, help="status").tag(sync=True)
+    initial = CInt(0, allow_none=True, help="initial").tag(sync=True)
 
 class Step(ReactWidget):
     _model_name = Unicode('StepModel').tag(sync=True)
     description = Unicode(None, allow_none=True, help="description").tag(sync=True)
     icon = Unicode(None, allow_none=True, help="icon").tag(sync=True)
-    status = Unicode('wait', allow_none=True, help="status").tag(sync=True)
+    status = Unicode(None, allow_none=True, help="status").tag(sync=True)
     title = Unicode(help="title").tag(sync=True)
 
 #class Transfer(ReactWidget):
