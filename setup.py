@@ -22,7 +22,9 @@ log.set_verbosity(log.DEBUG)
 log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
-LONG_DESCRIPTION = 'Ant Design Jupyter Widget'
+#LONG_DESCRIPTION = 'Ant Design Jupyter Widget'
+with open('README.md') as f:
+    LONG_DESCRIPTION = f.read()
 
 def js_prerelease(command, strict=False):
     """decorator for building minified js/css prior to another command"""
@@ -129,6 +131,7 @@ setup_args = {
     'version': version_ns['__version__'],
     'description': 'Ant Design Jupyter Widget',
     'long_description': LONG_DESCRIPTION,
+    'long_description_content_type': 'text/markdown', 
     'include_package_data': True,
     'data_files': [
         ('share/jupyter/nbextensions/ipyantd', [
