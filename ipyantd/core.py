@@ -64,6 +64,27 @@ class Selectable:
 class Checkable:
     checked = CBool(help="checked or not").tag(sync=True)
 
+class Row(ReactWidget):
+    _model_name = Unicode('RowModel').tag(sync=True)
+    align   = Unicode('top', help="align").tag(sync=True)
+    gutter  = CInt(0, help="gutter").tag(sync=True)
+    justify = Unicode('start', help="justify").tag(sync=True)
+    type    = Unicode(None, allow_none=True, help="type").tag(sync=True)
+
+class Col(ReactWidget):
+    _model_name = Unicode('ColModel').tag(sync=True)
+    offset = CInt(0, help="offset").tag(sync=True)
+    order  = CInt(0, help="order").tag(sync=True)
+    pull   = CInt(0, help="pull").tag(sync=True)
+    push   = CInt(0, help="push").tag(sync=True)
+    span   = CInt(None, allow_none=True, help="span").tag(sync=True)
+    xs     = CInt(None, allow_none=True, help="xs").tag(sync=True)
+    sm     = CInt(None, allow_none=True, help="sm").tag(sync=True)
+    md     = CInt(None, allow_none=True, help="md").tag(sync=True)
+    lg     = CInt(None, allow_none=True, help="lg").tag(sync=True)
+    xl     = CInt(None, allow_none=True, help="xl").tag(sync=True)
+    xxl    = CInt(None, allow_none=True, help="xxl").tag(sync=True)
+
 class ButtonBase(ReactWidget, ClickMixin):
     description = Unicode(help="Button label.").tag(sync=True)
 

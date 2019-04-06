@@ -26,6 +26,7 @@ Support Components
 
 |  Component | Support functions |
 |:----------:|:-----------------:|
+| Row & Col  |     essential     |
 | Button     |     essential     |
 | Switch     |     essential     |
 | Checkbox   |     essential     |

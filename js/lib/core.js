@@ -377,6 +377,22 @@ export
 }
 */
 
+// Row & Col
+import { Row, Col } from 'antd';
+export
+    class RowModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['align', 'gutter', 'justify']
+    reactComponent = () => BasicWidget(Row)
+}
+
+export
+    class ColModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['span', 'offset']
+    reactComponent = () => BasicWidget(Col)
+}
+
 // Button
 import { Button } from 'antd';
 export
