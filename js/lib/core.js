@@ -2,7 +2,9 @@ import * as React from 'react';
 import * as widgets from '@jupyter-widgets/base';
 import moment from 'moment';
 import { ReactModel } from './react-widget';
-import './styles/antd@3.15.1.css';
+//import './styles/antd@3.15.1.css';
+import 'antd/dist/antd.css';
+import './styles/ipyantd.css';
 
 
 //import IconCircle from '@material-ui/icons/Brightness1'
