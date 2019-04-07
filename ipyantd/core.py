@@ -7,6 +7,9 @@ from .mixins import ClickMixin
 class ValueMixin(HasTraits):
     value = Any(help="value of the widget").tag(sync=True, **widget_serialization)
 
+class DefaultValueMixin(HasTraits):
+    default_value = Any(help="default value of the widget").tag(sync=True, **widget_serialization)
+
 class LabelMixin:
     label = Unicode(help="label of the widget").tag(sync=True)
 
@@ -85,6 +88,42 @@ class Col(ReactWidget):
     xl     = CInt(None, allow_none=True, help="xl").tag(sync=True)
     xxl    = CInt(None, allow_none=True, help="xxl").tag(sync=True)
 
+class Form(ReactWidget):
+    _model_name = Unicode('FormModel').tag(sync=True)
+    label_col = Dict(help='label_col').tag(sync=True)
+    wrapper_col = Dict(help='label_col').tag(sync=True)
+
+class FormItem(ReactWidget):
+    _model_name = Unicode('FormItemModel').tag(sync=True)
+    label = Unicode('', allow_none=True, help='label').tag(sync=True)
+
+class Input(ReactWidget, ValueMixin):
+    _model_name = Unicode('InputModel').tag(sync=True)
+    default_value = Unicode('', allow_none=True, help="default_value").tag(sync=True)
+    type = Unicode(help="type").tag(sync=True)
+
+class TextArea(ReactWidget, ValueMixin):
+    _model_name = Unicode('TextAreaModel').tag(sync=True)
+    default_value = Unicode('', allow_none=True, help="default_value").tag(sync=True)
+    type = Unicode(help="type").tag(sync=True)
+
+class Search(ReactWidget, ValueMixin):
+    _model_name = Unicode('SearchModel').tag(sync=True)
+    default_value = Unicode('', allow_none=True, help="default_value").tag(sync=True)
+    type = Unicode(help="type").tag(sync=True)
+
+class InputGroup(ReactWidget, ValueMixin):
+    _model_name = Unicode('InputGroupModel').tag(sync=True)
+
+class Password(ReactWidget, ValueMixin):
+    _model_name = Unicode('PasswordModel').tag(sync=True)
+    visibility_toggle = CBool(True, allow_none=True, help="selected or not").tag(sync=True)
+
+class InputNumber(ReactWidget, ValueMixin):
+    _model_name = Unicode('InputNumberModel').tag(sync=True)
+    min = CFloat(help="min value").tag(sync=True)
+    max = CFloat(help="max value").tag(sync=True)
+
 class ButtonBase(ReactWidget, ClickMixin):
     description = Unicode(help="Button label.").tag(sync=True)
 
@@ -103,6 +142,14 @@ class Checkbox(ReactWidget):
     selected = CBool(help="selected or not").tag(sync=True)
     checked = CBool(help="checked or not").tag(sync=True)
 
+class Radio(ReactWidget, ValueMixin):
+    _model_name = Unicode('RadioModel').tag(sync=True)
+    default_checked = CBool(help="checked or not").tag(sync=True)
+
+class RadioGroup(ReactWidget, ValueMixin):
+    _model_name = Unicode('RadioGroupModel').tag(sync=True)
+    name = Unicode('', allow_none=True, help='Set mode of Select').tag(sync=True)
+
 class Select(ReactWidget, ValueMixin):
     _model_name = Unicode('SelectModel').tag(sync=True)
     description = Unicode(help="Select").tag(sync=True)
@@ -114,6 +161,12 @@ class SelectOption(ReactWidget, ValueMixin, Selectable):
     description = Unicode(help="SelectOption").tag(sync=True)
     key = Unicode(help="SelectOption key").tag(sync=True)
     selected = CBool(help="selected or not").tag(sync=True)  # if removed, traitlets goes to inf recursion
+
+class Slider(ReactWidget, DefaultValueMixin, ValueMixin):
+    _model_name = Unicode('SliderModel').tag(sync=True)
+    min = CFloat(help="min value").tag(sync=True)
+    max = CFloat(help="max value").tag(sync=True)
+    range = CBool(help="range mode or not").tag(sync=True)
 
 class DatePicker(ReactWidget, ValueMixin):
     _model_name = Unicode('DatePickerModel').tag(sync=True)

@@ -32,16 +32,22 @@ class BackboneWidget extends React.Component {
 }
 
 // using higher-order component pattern
-function BasicWidget(Component) {
+function BasicWidget(Component, isVoid=false) {
     return class extends BackboneWidget {
         render() {
             let { model, ...props } = this.stateProps();
-            return <Component {...props}>{props.children}</Component>
+            if (isVoid) {
+                console.log('isVoid');
+                delete props.children
+                return <Component {...props}/>
+            } else {
+                return <Component {...props}>{props.children}</Component>
+            }
         }
     }
 }
 
-function RemoveNull(Component, attributes) {
+function RemoveNull(Component, attributes=[]) {
     return class extends BackboneWidget {
         render() {
             let { ...cleanProps } = this.props;
@@ -54,7 +60,6 @@ function RemoveNull(Component, attributes) {
         }
     }
 }
-
 
 function ClickHandler(Component) {
     return class extends BackboneWidget {
@@ -121,7 +126,6 @@ function FixClickCapture(Component, attributeName = 'checked') {
         }
     }
 }
-
 
 function ToggleHandler(Component, attributeName = 'selected') {
     return class extends BackboneWidget {
@@ -395,6 +399,73 @@ export
     reactComponent = () => BasicWidget(Col)
 }
 
+// Form
+import { Form } from 'antd';
+export
+    class FormModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['labelCol', 'wrapperCol']
+    reactComponent = () => BasicWidget(Form)
+}
+
+// FormItem
+export
+    class FormItemModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), label: null } };
+    autoProps = ['label']
+    reactComponent = () => BasicWidget(Form.Item)
+}
+
+// Input
+import { Input } from 'antd';
+export
+    class InputModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null, type: 'text' } };
+    autoProps = ['value', 'type']
+    reactComponent = () => BasicWidget(Input, true)
+}
+
+// TextArea
+export
+    class TextAreaModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => BasicWidget(Input.TextArea)
+}
+
+// Search
+export
+    class SearchModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => BasicWidget(Input.Search, true)
+}
+
+// InputGroup
+export
+    class InputGroupModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => BasicWidget(Input.Group)
+}
+
+// Password
+export
+    class PasswordModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => BasicWidget(Input.Password, true)
+}
+
+// InputNumber
+import { InputNumber } from 'antd';
+export
+    class InputNumberModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null, min: -Infinity, max: Infinity } };
+    autoProps = ['value', 'min', 'max']
+    reactComponent = () => BasicWidget(InputNumber)
+}
+
 // Button
 import { Button } from 'antd';
 export
@@ -421,6 +492,23 @@ export
     reactComponent = () => CheckedWidget(Checkbox)
 }
 
+// Radio
+import { Radio } from 'antd';
+export
+    class RadioModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value']
+    reactComponent = () => BasicWidget(Radio)
+}
+
+// RadioGroup
+export
+    class RadioGroupModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), value: null } };
+    autoProps = ['value', 'name']
+    reactComponent = () => BasicWidget(Radio.Group)
+}
+
 // Select
 export
     class SelectModel extends ReactModel {
@@ -436,6 +524,15 @@ export
     defaults = () => { return { ...super.defaults(), value: null, key: '0' } };
     autoProps = ['value', 'key']
     reactComponent = () => BasicWidget(Select.Option)
+}
+
+// Slider
+import { Slider } from 'antd';
+export
+    class SliderModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), min: 0, max: 100, value: '', range: false } };
+    autoProps = ['min', 'max', 'value', 'range']
+    reactComponent = () => BasicWidget(Slider)
 }
 
 // DatePicker
