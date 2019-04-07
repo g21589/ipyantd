@@ -1,5 +1,5 @@
 import ipywidgets as widgets
-from traitlets import Unicode, Instance, CBool, CInt, CFloat, HasTraits, Any, Dict
+from traitlets import Unicode, Instance, CBool, CInt, CFloat, HasTraits, Any, Dict, List
 from ipywidgets.widgets.widget import widget_serialization
 from ipywidgets.widgets.trait_types import TypedTuple
 from .mixins import ClickMixin
@@ -142,6 +142,10 @@ class Checkbox(ReactWidget):
     selected = CBool(help="selected or not").tag(sync=True)
     checked = CBool(help="checked or not").tag(sync=True)
 
+class Cascader(ReactWidget):
+    _model_name = Unicode('CascaderModel').tag(sync=True)
+    options = List(help='options').tag(sync=True)
+
 class Radio(ReactWidget, ValueMixin):
     _model_name = Unicode('RadioModel').tag(sync=True)
     default_checked = CBool(help="checked or not").tag(sync=True)
@@ -210,6 +214,9 @@ class Step(ReactWidget):
     status = Unicode(None, allow_none=True, help="status").tag(sync=True)
     title = Unicode(help="title").tag(sync=True)
 
-#class Transfer(ReactWidget):
-#   _model_name = Unicode('TransferModel').tag(sync=True)
+class Transfer(ReactWidget):
+    _model_name = Unicode('TransferModel').tag(sync=True)
+    data_source = List(help="data_source").tag(sync=True)
+    show_search = CBool(False, allow_none=True, help="show_search").tag(sync=True)
+    target_keys = List(help="target_keys").tag(sync=True)
     
