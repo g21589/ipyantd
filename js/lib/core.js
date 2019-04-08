@@ -1,16 +1,9 @@
 import * as React from 'react';
-import * as widgets from '@jupyter-widgets/base';
 import moment from 'moment';
 import { ReactModel } from './react-widget';
-//import './styles/antd@3.15.1.css';
 import 'antd/dist/antd.css';
 import './styles/ipyantd.css';
 
-
-//import IconCircle from '@material-ui/icons/Brightness1'
-//import IconCircleBorder from '@material-ui/icons/Brightness1Outlined'
-
-//const icons = { 'circle': { 'filled': IconCircle, 'outlined': IconCircleBorder } }
 
 class BackboneWidget extends React.Component {
     constructor(props) {
@@ -196,85 +189,6 @@ function MomentValueHandler(Component) {
     }
 }
 
-class MenuDecorator extends React.Component {
-    state = {
-        anchorEl: null,
-        selectedIndex: 1,
-    };
-
-    handleClickListItem = event => {
-        this.setState({ anchorEl: event.currentTarget });
-    };
-
-    handleMenuItemClick = (event, index) => {
-        this.setState({ selectedIndex: index, anchorEl: null });
-    };
-
-    handleClose = () => {
-        this.setState({ anchorEl: null });
-    };
-    componentDidMount() {
-        this.updateCallback = () => {
-            this.forceUpdate()
-        }
-        this.props.menu.on('change', this.updateCallback)
-    }
-
-    componentWillUnmount() {
-        this.props.menu.off('change', this.updateCallback)
-    }
-
-    render() {
-        const { anchorEl } = this.state;
-        const menuItems = this.props.menu.get('children').map((item, index) => {
-            return item.createWrappedReactElement({
-                onClick: event => this.handleMenuItemClick(event, index),
-                key: item.cid
-            })
-        })
-        // if we use this, instead of the JSX below, the onClick does not get passed through
-        // const menu = this.props.menu.createWrappedReactElement(
-        //     {children:menuItems, anchorEl:anchorEl, open: Boolean(anchorEl), onClose: this.handleClose, id: "lock-menu"}
-        // )
-        return (
-            <div>
-                {this.props.children.map((child, index) =>
-                    React.cloneElement(child, {
-                        key: index, onClick: (event) => {
-                            this.handleClickListItem(event)
-                        }
-                    })
-                )}
-                {/* {menu} */}
-                <Menu
-                    model={this.props.menu}
-                    id="lock-menu"
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={this.handleClose}
-                >
-                    {menuItems}
-                </Menu>
-            </div>
-        );
-    }
-}
-
-function MenuHandler(Component) {
-    return class extends BackboneWidget {
-        render() {
-            let { menu, ...props } = this.props;
-            let component = <Component {...this.props}></Component>;
-            // let menu = this.model.get('menu')
-            if (menu) {
-                return <MenuDecorator menu={menu}>{[component]}</MenuDecorator>
-            } else {
-                return component;
-            }
-        }
-    }
-}
-
 function ToggleButtonGroupHandler(Component, attributeName = 'selected') {
     return class extends BackboneWidget {
         onChangeHandler = (event, value) => {
@@ -315,7 +229,7 @@ function SelectHandler(Component) {
             this.props.model.save_changes();
         }
         render() {
-            console.log('SelectHandler2 > render', Component);
+            console.log('SelectHandler > render', Component);
 
             let value = this.props.model.get('value');
             let options = this.props.model.get('options') || [];
@@ -337,28 +251,42 @@ function SelectHandler(Component) {
     }
 }
 
-// function IndexValueHandler(Component, attributeName='value') {
-//     return class extends BackboneWidget {
-//         onChangeHandler = (event, value) => {
-//             // if(value.props && value.props)
-//             //     value = value.props.value; // sometimes values is the widget
-//             // let exclusive = this.props.model.get('exclusive')
-//             // let children = this.props.model.get('children');
-//             // this.props.model.set('index', index)
-//             this.props.model.set('value', value);//children[index].get('value'))
-//             this.props.model.save_changes()
-//             //  || [];
-//             // children.forEach((child, childIndex) => {
-//             //     const visible = index == childIndex;
-//             //     child.set('visible', visible)
-//             // })
-//         }
-//         render() {
-//             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
-//         }   
-//     }
-// }
+function TransferHandler(Component) {
+    return class extends BackboneWidget {
+        onChangeHandler = (targetKeys, direction, moveKeys) => {
+        }
+        onSelectChangeHandler = (sourceSelectedKeys, targetSelectedKeys) => {
+        }
+        onScrollHandler = (direction, event) => {
+        }
+        onSearchHandler = (direction, value) => {
+        }
+        render() {          
+            return (
+                <Component {...this.props} render={item => item.title}/>
+            );
+        }
+    }
+}
 
+function DrawerHandler(Component) {
+    return class extends BackboneWidget {
+        onCloseHandler = (event) => {
+            // Change & Save status in `this.props.model`
+            console.log('DrawerHandler > onCloseHandler', event);
+            this.props.model.set('visible', false);
+            this.props.model.save_changes();
+        }
+        render() {
+            // Get status from `this.props.model` and then Render by `this.props`
+            console.log('DrawerHandler > render', Component);
+            this.props.visible = this.props.model.get('visible');            
+            return (
+                <Component {...this.props} onClose={this.onCloseHandler}></Component>
+            );
+        }
+    }
+}
 
 const ClickWidget = (c) => ClickHandler(BasicWidget(c))
 const CheckedWidget = (c) => CheckedHandler(ClickWidget(c))
@@ -366,22 +294,6 @@ const ValueWidget = (c) => ValueHandler(BasicWidget(c))
 // for some reason if we do ToggleHandler(ClickWidget(c)) it does not toggle
 const ToggleWidget = (c) => ToggleHandler(BasicWidget(c))
 const ToggleButtonGroupWidget = (c) => ToggleButtonGroupHandler(BasicWidget(c))
-
-/*
-import Typography from '@material-ui/core/Typography';
-class DivWithStyle extends React.Component {
-    render() {
-        return <Typography component="div"  {...this.props} />
-    }
-}
-
-export
-    class DivModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null, exclusive: false } };
-    autoProps = ['value', 'exclusive']
-    reactComponent = () => ClickWidget(DivWithStyle)
-}
-*/
 
 // Row & Col
 import { Row, Col } from 'antd';
@@ -597,6 +509,7 @@ export
     reactComponent = () => BasicWidget(Steps)
 }
 
+// Step
 export
     class StepModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), title: '', description: ''/*, status: null, icon: null*/} };
@@ -610,5 +523,14 @@ export
     class TransferModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), dataSource: [], targetKeys: [], showSearch: false, render: item => item.title } };
     autoProps = ['dataSource', 'showSearch', 'targetKeys']
-    reactComponent = () => BasicWidget(Transfer)
+    reactComponent = () => TransferHandler(BasicWidget(Transfer))
+}
+
+// Drawer
+import { Drawer } from 'antd';
+export
+    class DrawerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), title: 'Title', placement: 'right', visible: false } };
+    autoProps = ['title', 'placement', 'visible']
+    reactComponent = () => DrawerHandler(BasicWidget(Drawer))
 }

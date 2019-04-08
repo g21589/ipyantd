@@ -220,3 +220,8 @@ class Transfer(ReactWidget):
     show_search = CBool(False, allow_none=True, help="show_search").tag(sync=True)
     target_keys = List(help="target_keys").tag(sync=True)
     
+class Drawer(ReactWidget):
+    _model_name = Unicode('DrawerModel').tag(sync=True)
+    title = Unicode('Title', allow_none=True, help="title").tag(sync=True)
+    placement = Unicode('right', allow_none=True, help="placement").tag(sync=True)
+    visible = CBool(False, allow_none=True, help="visible").tag(sync=True)

@@ -4,11 +4,7 @@ import * as _ from 'lodash';
 import { camelCase, snakeCase } from 'lodash';
 import * as widgets from '@jupyter-widgets/base';
 
-// TODO: this part should be notebook only, since its fontsize is non-16
-// jupyter notebook (classical) fontfix
-import { Typography } from 'antd';
-
-// TODO: move Material-UI specific parts (such as style) to subclass
+// TODO: move UI specific parts (such as style) to subclass
 export
     class ReactModel extends widgets.DOMWidgetModel {
     // defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
@@ -78,14 +74,18 @@ export
         let children = [];
         // if(this.get('icon'))
         //     children.push(this.getChildWidgetComponent('icon'))
-        if (this.get('description'))
+        if (this.get('description')) {
             children.push(this.get('description'))
-        if (this.get('content'))
+        }
+        if (this.get('content')) {
             children.push(this.get('content'))
-        if (this.get('child'))
+        }
+        if (this.get('child')) {
             children.push(this.get('child').createWrappedReactElement())
-        if (this.get('children'))
+        }
+        if (this.get('children')) {
             children = children.concat(...this.getChildWidgetComponentList('children'))
+        }
         return children;
     }
     comp(name) {
@@ -93,7 +93,9 @@ export
     }
     getChildWidgetComponent(name) {
         let widget = this.get(name);
-        if (!widget) return null;
+        if (!widget) {
+            return null;
+        }
         if (widget instanceof ReactModel) {
             return widget.createWrappedReactElement()
         } else {
