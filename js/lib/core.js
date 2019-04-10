@@ -139,18 +139,20 @@ function ToggleHandler(Component, attributeName = 'selected') {
     }
 }
 
-function ValueHandler(Component, attributeName = 'value') {
+function ValueHandler(Component) {
     return class extends BackboneWidget {
-        onChangeHandler = (event, value) => {
+        onChangeHandler = (event) => {
             // Sync: React -> Backbone Model -> Python
-            this.props.model.set(attributeName, value)
+            let value = event.target === undefined ? event : event.target.value;
+            this.props.model.set('value', value)
             this.props.model.save_changes()
             if (this.props.onChange) {
-                this.props.onChange(event, value)
+                this.props.onChange(event)
             }
         }
         render() {
             // Sync: Python -> Backbone Model -> React
+            this.props.value = this.props.model.get('value')
             return <Component {...this.props} onChange={this.onChangeHandler}></Component>
         }
     }
@@ -334,7 +336,7 @@ export
     class InputModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, type: 'text' } };
     autoProps = ['value', 'type']
-    reactComponent = () => BasicWidget(Input, true)
+    reactComponent = () => ValueHandler(BasicWidget(Input, true))
 }
 
 // TextArea
@@ -342,7 +344,7 @@ export
     class TextAreaModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
     autoProps = ['value']
-    reactComponent = () => BasicWidget(Input.TextArea)
+    reactComponent = () => ValueHandler(BasicWidget(Input.TextArea))
 }
 
 // Search
@@ -350,7 +352,7 @@ export
     class SearchModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
     autoProps = ['value']
-    reactComponent = () => BasicWidget(Input.Search, true)
+    reactComponent = () => ValueHandler(BasicWidget(Input.Search, true))
 }
 
 // InputGroup
@@ -358,7 +360,7 @@ export
     class InputGroupModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
     autoProps = ['value']
-    reactComponent = () => BasicWidget(Input.Group)
+    reactComponent = () => ValueHandler(BasicWidget(Input.Group))
 }
 
 // Password
@@ -366,7 +368,7 @@ export
     class PasswordModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
     autoProps = ['value']
-    reactComponent = () => BasicWidget(Input.Password, true)
+    reactComponent = () => ValueHandler(BasicWidget(Input.Password, true))
 }
 
 // InputNumber
@@ -375,7 +377,7 @@ export
     class InputNumberModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, min: -Infinity, max: Infinity } };
     autoProps = ['value', 'min', 'max']
-    reactComponent = () => BasicWidget(InputNumber)
+    reactComponent = () => ValueHandler(BasicWidget(InputNumber))
 }
 
 // Button
@@ -453,7 +455,7 @@ export
     class SliderModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), min: 0, max: 100, value: '', range: false } };
     autoProps = ['min', 'max', 'value', 'range']
-    reactComponent = () => BasicWidget(Slider)
+    reactComponent = () => ValueHandler(BasicWidget(Slider))
 }
 
 // DatePicker
