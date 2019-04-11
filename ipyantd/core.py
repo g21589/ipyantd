@@ -219,9 +219,30 @@ class Transfer(ReactWidget):
     data_source = List(help="data_source").tag(sync=True)
     show_search = CBool(False, allow_none=True, help="show_search").tag(sync=True)
     target_keys = List(help="target_keys").tag(sync=True)
-    
+
+class Timeline(ReactWidget):
+    _model_name = Unicode('TimelineModel').tag(sync=True)
+    pending = CBool(False, allow_none=True, help="pending").tag(sync=True)
+    pending_dot = Unicode(None, allow_none=True, help="pending_dot").tag(sync=True)
+    reverse = CBool(False, allow_none=True, help="reverse").tag(sync=True)
+    mode = Unicode('left', allow_none=True, help="mode").tag(sync=True)
+
+class TimelineItem(ReactWidget):
+    _model_name = Unicode('TimelineItemModel').tag(sync=True)
+    color = Unicode('blue', allow_none=True, help="color").tag(sync=True)
+    dot = Unicode(None, allow_none=True, help="dot").tag(sync=True)
+
 class Drawer(ReactWidget):
     _model_name = Unicode('DrawerModel').tag(sync=True)
     title = Unicode('Title', allow_none=True, help="title").tag(sync=True)
     placement = Unicode('right', allow_none=True, help="placement").tag(sync=True)
     visible = CBool(False, allow_none=True, help="visible").tag(sync=True)
+
+class Model(ReactWidget):
+    _model_name = Unicode('ModelModel').tag(sync=True)
+    title = Unicode('Title', allow_none=True, help="title").tag(sync=True)
+    visible = CBool(False, allow_none=True, help="visible").tag(sync=True)
+
+class Popconfirm(ReactWidget):
+    _model_name = Unicode('PopconfirmModel').tag(sync=True)
+    title = Unicode('Title', allow_none=True, help="title").tag(sync=True)

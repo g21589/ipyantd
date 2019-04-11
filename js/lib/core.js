@@ -290,6 +290,52 @@ function DrawerHandler(Component) {
     }
 }
 
+function ModelHandler(Component) {
+    return class extends BackboneWidget {
+        onOkHandler = (event) => {
+            console.log('ModelHandler > onOkHandler', event);
+            this.props.model.set('visible', false);
+            this.props.model.save_changes();
+        }
+        onCancelHandler = (event) => {
+            console.log('ModelHandler > onCancelHandler', event);
+            this.props.model.set('visible', false);
+            this.props.model.save_changes();
+        }
+        render() {
+            console.log('ModelHandler > render', Component);
+            this.props.visible = this.props.model.get('visible');            
+            return (
+                <Component 
+                    {...this.props}
+                    onOk={this.onOkHandler}
+                    onCancel={this.onCancelHandler}
+                >
+                </Component>
+            );
+        }
+    }
+}
+
+function PopconfirmHandler(Component) {
+    return class extends BackboneWidget {
+        onConfirmHandler = (event) => {
+        }
+        onCancelHandler = (event) => {
+        }
+        render() {   
+            return (
+                <Component 
+                    {...this.props}
+                    onConfirm={this.onConfirmHandler}
+                    onCancel={this.onCancelHandler}
+                >
+                </Component>
+            );
+        }
+    }
+}
+
 const ClickWidget = (c) => ClickHandler(BasicWidget(c))
 const CheckedWidget = (c) => CheckedHandler(ClickWidget(c))
 const ValueWidget = (c) => ValueHandler(BasicWidget(c))
@@ -523,9 +569,26 @@ export
 import { Transfer } from 'antd';
 export
     class TransferModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), dataSource: [], targetKeys: [], showSearch: false, render: item => item.title } };
+    defaults = () => { return { ...super.defaults(), dataSource: [], targetKeys: [], showSearch: false } };
     autoProps = ['dataSource', 'showSearch', 'targetKeys']
     reactComponent = () => TransferHandler(BasicWidget(Transfer))
+}
+
+// Timeline
+import { Timeline } from 'antd';
+export
+    class TimelineModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), pending: false, reverse: false, mode: 'left' } };
+    autoProps = ['pending', 'reverse', 'mode']
+    reactComponent = () => BasicWidget(Timeline)
+}
+
+// TimelineItem
+export
+    class TimelineItemModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), color: 'blue' } };
+    autoProps = ['color']
+    reactComponent = () => BasicWidget(Timeline.Item)
 }
 
 // Drawer
@@ -535,4 +598,22 @@ export
     defaults = () => { return { ...super.defaults(), title: 'Title', placement: 'right', visible: false } };
     autoProps = ['title', 'placement', 'visible']
     reactComponent = () => DrawerHandler(BasicWidget(Drawer))
+}
+
+// Model
+import { Model } from 'antd';
+export
+    class ModelModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), title: 'Title', visible: false } };
+    autoProps = ['title', 'visible']
+    reactComponent = () => ModelHandler(BasicWidget(Model))
+}
+
+// Popconfirm
+import { Popconfirm } from 'antd';
+export
+    class PopconfirmModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), title: 'Title' } };
+    autoProps = ['title']
+    reactComponent = () => PopconfirmHandler(BasicWidget(Popconfirm))
 }
