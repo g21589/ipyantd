@@ -88,6 +88,50 @@ class Col(ReactWidget):
     xl     = CInt(None, allow_none=True, help="xl").tag(sync=True)
     xxl    = CInt(None, allow_none=True, help="xxl").tag(sync=True)
 
+class Icon(ReactWidget):
+    _model_name = Unicode('IconModel').tag(sync=True)
+    type        = Unicode('', help='type').tag(sync=True)
+    spin        = CBool(False, help="spin").tag(sync=True)
+    rotate      = CFloat(None, allow_none=True, help="rotate").tag(sync=True)
+
+class Text(ReactWidget):
+    _model_name = Unicode('TextModel').tag(sync=True)
+    code        = CBool(False, help="code").tag(sync=True)
+    copyable    = CBool(False, help="copyable").tag(sync=True)
+    delete      = CBool(False, help="delete").tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    editable    = CBool(False, help="editable").tag(sync=True)
+    ellipsis    = CBool(False, help="ellipsis").tag(sync=True)
+    mark        = CBool(False, help="mark").tag(sync=True)
+    underline   = CBool(False, help="underline").tag(sync=True)
+    strong      = CBool(False, help="strong").tag(sync=True)
+    type        = Unicode('', help='type').tag(sync=True)
+
+class Title(ReactWidget):
+    _model_name = Unicode('TitleModel').tag(sync=True)
+    level       = CInt(1, help="level").tag(sync=True)
+    copyable    = CBool(False, help="copyable").tag(sync=True)
+    delete      = CBool(False, help="delete").tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    editable    = CBool(False, help="editable").tag(sync=True)
+    ellipsis    = CBool(False, help="ellipsis").tag(sync=True)
+    mark        = CBool(False, help="mark").tag(sync=True)
+    underline   = CBool(False, help="underline").tag(sync=True)
+    strong      = CBool(False, help="strong").tag(sync=True)
+    type        = Unicode('', help='type').tag(sync=True)
+
+class Paragraph(ReactWidget):
+    _model_name = Unicode('ParagraphModel').tag(sync=True)
+    copyable    = CBool(False, help="copyable").tag(sync=True)
+    delete      = CBool(False, help="delete").tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    editable    = CBool(False, help="editable").tag(sync=True)
+    ellipsis    = CBool(False, help="ellipsis").tag(sync=True)
+    mark        = CBool(False, help="mark").tag(sync=True)
+    underline   = CBool(False, help="underline").tag(sync=True)
+    strong      = CBool(False, help="strong").tag(sync=True)
+    type        = Unicode('', help='type').tag(sync=True)
+
 class Form(ReactWidget):
     _model_name = Unicode('FormModel').tag(sync=True)
     label_col = Dict(help='label_col').tag(sync=True)

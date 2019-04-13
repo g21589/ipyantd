@@ -343,7 +343,7 @@ const ValueWidget = (c) => ValueHandler(BasicWidget(c))
 const ToggleWidget = (c) => ToggleHandler(BasicWidget(c))
 const ToggleButtonGroupWidget = (c) => ToggleButtonGroupHandler(BasicWidget(c))
 
-// Row & Col
+// Row
 import { Row, Col } from 'antd';
 export
     class RowModel extends ReactModel {
@@ -352,11 +352,49 @@ export
     reactComponent = () => BasicWidget(Row)
 }
 
+// Col
 export
     class ColModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['span', 'offset']
     reactComponent = () => BasicWidget(Col)
+}
+
+// Icon
+import { Icon } from 'antd';
+export
+    class IconModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['type', 'spin', 'rotate']
+    reactComponent = () => BasicWidget(Icon)
+}
+
+// Text
+import { Typography } from 'antd';
+export
+    class TextModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['code', 'copyable ', 'delete', 'disabled', 'editable', 
+                 'ellipsis', 'mark', 'underline', 'strong', 'type']
+    reactComponent = () => BasicWidget(Typography.Text)
+}
+
+// Title
+export
+    class TitleModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['copyable ', 'delete', 'disabled', 'editable', 
+                 'ellipsis', 'mark', 'underline', 'strong', 'type', 'level']
+    reactComponent = () => BasicWidget(Typography.Title)
+}
+
+// Paragraph
+export
+    class ParagraphModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['copyable ', 'delete', 'disabled', 'editable', 
+                 'ellipsis', 'mark', 'underline', 'strong', 'type']
+    reactComponent = () => BasicWidget(Typography.Paragraph)
 }
 
 // Form
