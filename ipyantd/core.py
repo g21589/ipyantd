@@ -173,6 +173,9 @@ class ButtonBase(ReactWidget, ClickMixin):
 
 class Button(ButtonBase):
     _model_name = Unicode('ButtonModel').tag(sync=True)
+    type        = Unicode('default', help="type").tag(sync=True)
+    size        = Unicode('default', help="size").tag(sync=True)
+    icon        = Unicode(help="icon").tag(sync=True)
 
 class Switch(ButtonBase, ValueMixin):
     _model_name = Unicode('SwitchModel').tag(sync=True)
@@ -266,10 +269,17 @@ class Transfer(ReactWidget):
 
 class Avatar(ReactWidget):
     _model_name = Unicode('AvatarModel').tag(sync=True)
-    # TODO
+    icon        = Unicode(help="icon").tag(sync=True)
+    shape       = Unicode('circle', help="shape").tag(sync=True)
+    size        = Unicode('default', help="size").tag(sync=True)
+    src         = Unicode(help="src").tag(sync=True)
+    src_set     = Unicode(help="src_set").tag(sync=True)
+    alt         = Unicode(help="alt").tag(sync=True)
 
 class Badge(ReactWidget):
     _model_name = Unicode('BadgeModel').tag(sync=True)
+    count = CInt(help="count").tag(sync=True)
+    status = Unicode(help="status").tag(sync=True)
     # TODO
 
 class Comment(ReactWidget):
@@ -280,13 +290,17 @@ class Collapse(ReactWidget):
     _model_name = Unicode('CollapseModel').tag(sync=True)
     # TODO
 
+class CollapsePanel(ReactWidget):
+    _model_name = Unicode('CollapsePanelModel').tag(sync=True)
+    # TODO
+
 class Carousel(ReactWidget):
     _model_name = Unicode('CollapseModel').tag(sync=True)
     # TODO
 
 class Card(ReactWidget):
     _model_name = Unicode('CardModel').tag(sync=True)
-    title = Unicode('blue', help="title").tag(sync=True)
+    title = Unicode('', help="title").tag(sync=True)
     extra = Unicode('', help="extra").tag(sync=True)
     size  = Unicode('default', help="size").tag(sync=True)
     # TODO
@@ -316,10 +330,17 @@ class ANTListItem(ReactWidget):
 
 class Popover(ReactWidget):
     _model_name = Unicode('PopoverModel').tag(sync=True)
+    #content     =
+    title       = Unicode(help="title").tag(sync=True)
     # TODO
 
 class Statistic(ReactWidget):
     _model_name = Unicode('StatisticModel').tag(sync=True)
+    title       = Unicode('', help="title").tag(sync=True)
+    value       = Any(100, help="value").tag(sync=True)
+    precision   = CInt(0, help="precision").tag(sync=True)
+    prefix      = Unicode('', help="prefix").tag(sync=True)
+    suffix      = Unicode('', help="suffix").tag(sync=True)
     # TODO
 
 class Tree(ReactWidget):
@@ -328,6 +349,7 @@ class Tree(ReactWidget):
 
 class Tooltip(ReactWidget):
     _model_name = Unicode('TooltipModel').tag(sync=True)
+    title       = Unicode(help="title").tag(sync=True)
     # TODO
 
 class Tag(ReactWidget):

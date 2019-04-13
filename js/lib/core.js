@@ -469,7 +469,7 @@ import { Button } from 'antd';
 export
     class ButtonModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, exclusive: false } };
-    autoProps = ['value', 'exclusive']
+    autoProps = ['value', 'exclusive', 'type', 'size', 'icon']
     reactComponent = () => ClickWidget(Button)
 }
 
@@ -617,16 +617,16 @@ import { Avatar } from 'antd';
 export
     class AvatarModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['icon', 'shape', 'size', 'src', 'srcSet', 'alt']
     reactComponent = () => BasicWidget(Avatar)
 }
 
-// Avatar
+// Badge
 import { Badge } from 'antd';
 export
     class BadgeModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['count', 'status']
     reactComponent = () => BasicWidget(Badge)
 }
 
@@ -646,6 +646,14 @@ export
     defaults = () => { return { ...super.defaults() } };
     autoProps = []
     reactComponent = () => BasicWidget(Collapse)
+}
+
+// CollapsePanel
+export
+    class CollapsePanelModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Collapse.Panel)
 }
 
 // Carousel
@@ -722,7 +730,7 @@ import { Popover } from 'antd';
 export
     class PopoverModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['title']
     reactComponent = () => BasicWidget(Popover)
 }
 
@@ -731,7 +739,7 @@ import { Statistic } from 'antd';
 export
     class StatisticModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['title', 'value', 'precision', 'prefix', 'suffix']
     reactComponent = () => BasicWidget(Statistic)
 }
 
@@ -749,7 +757,7 @@ import { Tooltip } from 'antd';
 export
     class TooltipModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['title']
     reactComponent = () => BasicWidget(Tooltip)
 }
 
