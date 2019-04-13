@@ -264,6 +264,84 @@ class Transfer(ReactWidget):
     show_search = CBool(False, allow_none=True, help="show_search").tag(sync=True)
     target_keys = List(help="target_keys").tag(sync=True)
 
+class Avatar(ReactWidget):
+    _model_name = Unicode('AvatarModel').tag(sync=True)
+    # TODO
+
+class Badge(ReactWidget):
+    _model_name = Unicode('BadgeModel').tag(sync=True)
+    # TODO
+
+class Comment(ReactWidget):
+    _model_name = Unicode('CommentModel').tag(sync=True)
+    # TODO
+
+class Collapse(ReactWidget):
+    _model_name = Unicode('CollapseModel').tag(sync=True)
+    # TODO
+
+class Carousel(ReactWidget):
+    _model_name = Unicode('CollapseModel').tag(sync=True)
+    # TODO
+
+class Card(ReactWidget):
+    _model_name = Unicode('CardModel').tag(sync=True)
+    title = Unicode('blue', help="title").tag(sync=True)
+    extra = Unicode('', help="extra").tag(sync=True)
+    size  = Unicode('default', help="size").tag(sync=True)
+    # TODO
+
+class CardGrid(ReactWidget):
+    _model_name = Unicode('CardGridModel').tag(sync=True)
+    class_name = Unicode('', help="class_name").tag(sync=True)
+
+class CardMeta(ReactWidget):
+    _model_name = Unicode('CardMetaModel').tag(sync=True)
+
+class Calendar(ReactWidget):
+    _model_name = Unicode('CalendarModel').tag(sync=True)
+    # TODO
+
+class Empty(ReactWidget):
+    _model_name = Unicode('EmptyModel').tag(sync=True)
+    # TODO
+
+class ANTList(ReactWidget):
+    _model_name = Unicode('ListModel').tag(sync=True)
+    # TODO
+
+class ANTListItem(ReactWidget):
+    _model_name = Unicode('ListItemModel').tag(sync=True)
+    # TODO
+
+class Popover(ReactWidget):
+    _model_name = Unicode('PopoverModel').tag(sync=True)
+    # TODO
+
+class Statistic(ReactWidget):
+    _model_name = Unicode('StatisticModel').tag(sync=True)
+    # TODO
+
+class Tree(ReactWidget):
+    _model_name = Unicode('TreeModel').tag(sync=True)
+    # TODO
+
+class Tooltip(ReactWidget):
+    _model_name = Unicode('TooltipModel').tag(sync=True)
+    # TODO
+
+class Tag(ReactWidget):
+    _model_name = Unicode('TagModel').tag(sync=True)
+    # TODO
+
+class Tabs(ReactWidget):
+    _model_name = Unicode('TabsModel').tag(sync=True)
+    # TODO
+
+class Table(ReactWidget):
+    _model_name = Unicode('TableModel').tag(sync=True)
+    # TODO
+
 class Timeline(ReactWidget):
     _model_name = Unicode('TimelineModel').tag(sync=True)
     pending = CBool(False, allow_none=True, help="pending").tag(sync=True)

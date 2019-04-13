@@ -513,7 +513,7 @@ export
     class RadioGroupModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
     autoProps = ['value', 'name']
-    reactComponent = () => BasicWidget(Radio.Group)
+    reactComponent = () => ValueHandler(BasicWidget(Radio.Group))
 }
 
 // Select
@@ -610,6 +610,174 @@ export
     defaults = () => { return { ...super.defaults(), dataSource: [], targetKeys: [], showSearch: false } };
     autoProps = ['dataSource', 'showSearch', 'targetKeys']
     reactComponent = () => TransferHandler(BasicWidget(Transfer))
+}
+
+// Avatar
+import { Avatar } from 'antd';
+export
+    class AvatarModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Avatar)
+}
+
+// Avatar
+import { Badge } from 'antd';
+export
+    class BadgeModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Badge)
+}
+
+// Comment
+import { Comment } from 'antd';
+export
+    class CommentModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Comment)
+}
+
+// Collapse
+import { Collapse } from 'antd';
+export
+    class CollapseModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Collapse)
+}
+
+// Carousel
+import { Carousel } from 'antd';
+export
+    class CarouselModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Carousel)
+}
+
+// Card
+import { Card } from 'antd';
+export
+    class CardModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['title', 'extra', 'size']
+    reactComponent = () => BasicWidget(Card)
+}
+
+// Card
+export
+    class CardGridModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Card.Grid)
+}
+
+// Card
+export
+    class CardMetaModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Card.Meta)
+}
+
+// Calendar
+import { Calendar } from 'antd';
+export
+    class CalendarModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Calendar)
+}
+
+// Empty
+import { Empty } from 'antd';
+export
+    class EmptyModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Empty)
+}
+
+// List
+import { List } from 'antd';
+export
+    class ListModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(List)
+}
+
+// ListItem
+export
+    class ListItemModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(List.Item)
+}
+
+// Popover
+import { Popover } from 'antd';
+export
+    class PopoverModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Popover)
+}
+
+// Statistic
+import { Statistic } from 'antd';
+export
+    class StatisticModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Statistic)
+}
+
+// Tree
+import { Tree } from 'antd';
+export
+    class TreeModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Tree)
+}
+
+// Tooltip
+import { Tooltip } from 'antd';
+export
+    class TooltipModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Tooltip)
+}
+
+// Tag
+import { Tag } from 'antd';
+export
+    class TagModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Tag)
+}
+
+// Tabs
+import { Tabs } from 'antd';
+export
+    class TabsModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Tabs)
+}
+
+// Table
+import { Table } from 'antd';
+export
+    class TableModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Table)
 }
 
 // Timeline
