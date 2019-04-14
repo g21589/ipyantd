@@ -134,12 +134,12 @@ class Paragraph(ReactWidget):
 
 class Form(ReactWidget):
     _model_name = Unicode('FormModel').tag(sync=True)
-    label_col = Dict(help='label_col').tag(sync=True)
+    label_col   = Dict(help='label_col').tag(sync=True)
     wrapper_col = Dict(help='label_col').tag(sync=True)
 
 class FormItem(ReactWidget):
     _model_name = Unicode('FormItemModel').tag(sync=True)
-    label = Unicode('', allow_none=True, help='label').tag(sync=True)
+    label       = Unicode('', allow_none=True, help='label').tag(sync=True)
 
 class Input(ReactWidget, ValueMixin):
     _model_name = Unicode('InputModel').tag(sync=True)
@@ -186,12 +186,12 @@ class Switch(ButtonBase, ValueMixin):
 class Checkbox(ReactWidget):
     _model_name = Unicode('CheckboxModel').tag(sync=True)
     description = Unicode(help="Menu item").tag(sync=True)
-    selected = CBool(help="selected or not").tag(sync=True)
-    checked = CBool(help="checked or not").tag(sync=True)
+    selected    = CBool(help="selected or not").tag(sync=True)
+    checked     = CBool(help="checked or not").tag(sync=True)
 
 class Cascader(ReactWidget):
     _model_name = Unicode('CascaderModel').tag(sync=True)
-    options = List(help='options').tag(sync=True)
+    options     = List(help='options').tag(sync=True)
 
 class Radio(ReactWidget, ValueMixin):
     _model_name = Unicode('RadioModel').tag(sync=True)
@@ -288,14 +288,27 @@ class Comment(ReactWidget):
 
 class Collapse(ReactWidget):
     _model_name = Unicode('CollapseModel').tag(sync=True)
+    bordered    = CBool(True, help="bordered").tag(sync=True)
+    accordion   = CBool(False, help="accordion").tag(sync=True)
+    destroy_inactive_panel = CBool(False, help="destroy_inactive_panel").tag(sync=True)
     # TODO
 
 class CollapsePanel(ReactWidget):
     _model_name = Unicode('CollapsePanelModel').tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    force_render = CBool(False, help="force_render").tag(sync=True)
+    header      = Unicode(help="header").tag(sync=True)
+    key         = Unicode(help="key").tag(sync=True)
+    show_arrow  = CBool(True, help="show_arrow").tag(sync=True)
     # TODO
 
 class Carousel(ReactWidget):
     _model_name = Unicode('CollapseModel').tag(sync=True)
+    autoplay    = CBool(False, help="autoplay").tag(sync=True)
+    vertical    = CBool(False, help="vertical").tag(sync=True)
+    dots        = CBool(False, help="dots").tag(sync=True)
+    easing      = Unicode('linear', help="easing").tag(sync=True)
+    effect      = Unicode('scrollx', help="effect").tag(sync=True)
     # TODO
 
 class Card(ReactWidget):
@@ -345,6 +358,24 @@ class Statistic(ReactWidget):
 
 class Tree(ReactWidget):
     _model_name = Unicode('TreeModel').tag(sync=True)
+    auto_expand_parent = CBool(True, help="auto_expand_parent").tag(sync=True)
+    block_node  = CBool(False, help="block_node").tag(sync=True)
+    checkable   = CBool(False, help="checkable").tag(sync=True)
+    multiple    = CBool(False, help="multiple").tag(sync=True)
+    show_line   = CBool(False, help="show_line").tag(sync=True)
+    draggable   = CBool(False, help="draggable").tag(sync=True)
+    # TODO
+
+class TreeNode(ReactWidget):
+    _model_name      = Unicode('TreeNodeModel').tag(sync=True)
+    disable_checkbox = CBool(False, help="disable_checkbox").tag(sync=True)
+    disabled         = CBool(False, help="disabled").tag(sync=True)
+    icon             = Instance('ipywidgets.widgets.domwidget.DOMWidget', default_value=None, allow_none=True)\
+                            .tag(sync=True, **widget_serialization).tag(sync=True)
+    is_leaf          = CBool(False, help="is_leaf").tag(sync=True)
+    title            = Unicode('', help="title").tag(sync=True)
+    key              = Unicode('0-0', help="key").tag(sync=True)
+    selectable       = CBool(True, help="selectable").tag(sync=True)
     # TODO
 
 class Tooltip(ReactWidget):
@@ -354,14 +385,30 @@ class Tooltip(ReactWidget):
 
 class Tag(ReactWidget):
     _model_name = Unicode('TagModel').tag(sync=True)
+    closable    = CBool(False, help="closable").tag(sync=True)
+    color       = Unicode(help="color").tag(sync=True)
+    visible     = CBool(True, help="visible").tag(sync=True)
     # TODO
 
 class Tabs(ReactWidget):
     _model_name = Unicode('TabsModel').tag(sync=True)
+    type        = Unicode('line', help="type").tag(sync=True)
+    tab_position = Unicode('top', help="tab_position").tag(sync=True)
+    size        = Unicode('default', help="size").tag(sync=True)
+    # TODO
+
+class TabPane(ReactWidget):
+    _model_name = Unicode('TabPaneModel').tag(sync=True)
+    tab         = Unicode(help="tab").tag(sync=True)
+    key         = Unicode(help="key").tag(sync=True)
     # TODO
 
 class Table(ReactWidget):
     _model_name = Unicode('TableModel').tag(sync=True)
+    data_source = List(help="data_source").tag(sync=True)
+    columns     = List(help="columns").tag(sync=True)
+    bordered    = CBool(False, help="bordered").tag(sync=True)
+    size        = Unicode('small', help="size").tag(sync=True)
     # TODO
 
 class Timeline(ReactWidget):

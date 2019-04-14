@@ -40,16 +40,11 @@ function BasicWidget(Component, isVoid=false) {
     }
 }
 
-function RemoveNull(Component, attributes=[]) {
+function DivWidget() {
     return class extends BackboneWidget {
         render() {
-            let { ...cleanProps } = this.props;
-            attributes.forEach((attribute) => {
-                if (cleanProps[attribute] === null) {
-                    delete cleanProps[attribute]
-                }
-            })
-            return <Component {...cleanProps}>{cleanProps.children}</Component>
+            let { model, ...props } = this.stateProps();
+            return <div {...props}>{props.children}</div>
         }
     }
 }
@@ -342,6 +337,14 @@ const ValueWidget = (c) => ValueHandler(BasicWidget(c))
 // for some reason if we do ToggleHandler(ClickWidget(c)) it does not toggle
 const ToggleWidget = (c) => ToggleHandler(BasicWidget(c))
 const ToggleButtonGroupWidget = (c) => ToggleButtonGroupHandler(BasicWidget(c))
+
+// Div
+export
+    class DivModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => DivWidget()
+}
 
 // Row
 import { Row, Col } from 'antd';
@@ -644,7 +647,7 @@ import { Collapse } from 'antd';
 export
     class CollapseModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['bordered', 'accordion', 'destroyInactivePanel']
     reactComponent = () => BasicWidget(Collapse)
 }
 
@@ -652,7 +655,7 @@ export
 export
     class CollapsePanelModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['disabled', 'forceRender', 'header', 'key', 'showArrow']
     reactComponent = () => BasicWidget(Collapse.Panel)
 }
 
@@ -661,7 +664,7 @@ import { Carousel } from 'antd';
 export
     class CarouselModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['autoplay', 'vertical', 'dots', 'easing', 'effect']
     reactComponent = () => BasicWidget(Carousel)
 }
 
@@ -748,8 +751,18 @@ import { Tree } from 'antd';
 export
     class TreeModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['autoExpandParent', 'blockNode', 'checkable', 'multiple', 
+                 'showLine', 'draggable']
     reactComponent = () => BasicWidget(Tree)
+}
+
+// TreeNode
+export
+    class TreeNodeModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['disableCheckbox', 'disabled', 'icon', 'isLeaf', 
+                 'title', 'key', 'selectable']
+    reactComponent = () => BasicWidget(Tree.TreeNode)
 }
 
 // Tooltip
@@ -766,7 +779,7 @@ import { Tag } from 'antd';
 export
     class TagModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['closable', 'color', 'visible']
     reactComponent = () => BasicWidget(Tag)
 }
 
@@ -775,8 +788,16 @@ import { Tabs } from 'antd';
 export
     class TabsModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['type', 'tabPosition', 'size']
     reactComponent = () => BasicWidget(Tabs)
+}
+
+// TabPane
+export
+    class TabPaneModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['tab', 'key']
+    reactComponent = () => BasicWidget(Tabs.TabPane)
 }
 
 // Table
@@ -784,7 +805,7 @@ import { Table } from 'antd';
 export
     class TableModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['dataSource', 'columns', 'bordered', 'size']
     reactComponent = () => BasicWidget(Table)
 }
 
