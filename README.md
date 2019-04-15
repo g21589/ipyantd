@@ -1,6 +1,7 @@
 ipyantd
 ===============================
 [![PyPI version](https://badge.fury.io/py/ipyantd.svg)](https://badge.fury.io/py/ipyantd)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/g21589/ipyantd/master?filepath=ipyantd_test.ipynb)
 
 Ant Design Jupyter Widget
 
