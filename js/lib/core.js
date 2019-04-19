@@ -1,9 +1,11 @@
 import * as React from 'react';
 import moment from 'moment';
 import { ReactModel } from './react-widget';
+import GridLayout from 'react-grid-layout';
 import 'antd/dist/antd.css';
 import './styles/ipyantd.css';
-
+import 'react-grid-layout/css/styles.css';
+//import 'react-resizable/css/styles.css';
 
 class BackboneWidget extends React.Component {
     constructor(props) {
@@ -344,6 +346,65 @@ export
     defaults = () => { return { ...super.defaults() } };
     autoProps = []
     reactComponent = () => DivWidget()
+}
+
+// ReactGridLayout
+function ReactGridLayoutHandler() {
+    return class extends BackboneWidget {
+        render() {
+
+            let { model, ...props } = this.stateProps();
+            let es = props.children.map((element, index) => <div key={index}>{element}</div>)
+
+            // layout is an array of objects, see the demo for more complete usage
+            /*
+            let layout = [
+                {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
+                {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
+                {i: 'c', x: 4, y: 0, w: 1, h: 2}
+            ];
+            
+            return (
+                <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
+                    {es}
+                </GridLayout>
+            )
+            */
+
+           return (
+                <GridLayout className="layout" {...props}>
+                    {es}
+                </GridLayout>
+            )
+
+        }
+    }
+}
+
+export
+    class ReactGridLayoutModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), cols: 12, rowHeight:30, width: 1200 } };
+    autoProps = ['layout', 'cols', 'rowHeight', 'width']
+    //reactComponent = () => BasicWidget(GridLayout)
+    reactComponent = () => ReactGridLayoutHandler()
+}
+
+function ReactGridLayoutItemHandler() {
+    return class extends BackboneWidget {
+        render() {
+            return (
+                <div key={this.props.model.get('key')}>AAAAA</div>
+            );
+        }
+    }
+}
+
+// ReactGridLayoutItem
+export
+    class ReactGridLayoutItemModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['key']
+    reactComponent = () => ReactGridLayoutItemHandler()
 }
 
 // Row

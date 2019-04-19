@@ -67,6 +67,17 @@ class Selectable:
 class Checkable:
     checked = CBool(help="checked or not").tag(sync=True)
 
+class ReactGridLayout(ReactWidget):
+    _model_name = Unicode('ReactGridLayoutModel').tag(sync=True)
+    layout      = List(help="layout").tag(sync=True)
+    cols        = CInt(12, help="cols").tag(sync=True)
+    row_height  = CInt(30, help="row_height").tag(sync=True)
+    width       = CInt(900, help="width").tag(sync=True)
+
+class ReactGridLayoutItem(ReactWidget):
+    _model_name = Unicode('ReactGridLayoutItemModel').tag(sync=True)
+    key = Unicode(help="key").tag(sync=True)
+
 class Row(ReactWidget):
     _model_name = Unicode('RowModel').tag(sync=True)
     align   = Unicode('top', help="align").tag(sync=True)
