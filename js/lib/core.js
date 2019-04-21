@@ -351,28 +351,56 @@ export
 // ReactGridLayout
 function ReactGridLayoutHandler() {
     return class extends BackboneWidget {
+
+        onLayoutChangeHandler = (layout) => {
+            this.props.model.set('layout', layout);
+            this.props.model.save_changes();
+            this.saveLayoutToLS('TEST', 'layout', layout)
+        }
+        
+        onResizeStartHandler = (layout, oldItem, newItem, placeholder, e, element) => {
+            console.log('onResizeStart');
+        }
+        
+        onResizeHandler = (layout, oldItem, newItem, placeholder, e, element) => {
+            console.log('onResize');
+        }
+        
+        onResizeStopHandler = (layout, oldItem, newItem, placeholder, e, element) => {
+            console.log('onResizeStop');
+        }
+
+        getLayoutFromLS = (apname, key) => {
+            let ls = {};
+            if (global.localStorage) {
+                try {
+                    ls = JSON.parse(global.localStorage.getItem(apname)) || {};
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            return ls[key];
+        }
+          
+        saveLayoutToLS = (apname, key, value) => {
+            if (global.localStorage) {
+                global.localStorage.setItem(apname, JSON.stringify({ [key]: value }));
+            }
+        }
+
         render() {
 
             let { model, ...props } = this.stateProps();
             let es = props.children.map((element, index) => <div key={index}>{element}</div>)
 
-            // layout is an array of objects, see the demo for more complete usage
-            /*
-            let layout = [
-                {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
-                {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
-                {i: 'c', x: 4, y: 0, w: 1, h: 2}
-            ];
-            
             return (
-                <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-                    {es}
-                </GridLayout>
-            )
-            */
-
-           return (
-                <GridLayout className="layout" {...props}>
+                <GridLayout 
+                    {...props} 
+                    onLayoutChange={this.onLayoutChangeHandler}
+                    onResizeStart={this.onResizeStartHandler}
+                    onResize={this.onResizeHandler}
+                    onResizeStop={this.onResizeStopHandler}
+                >
                     {es}
                 </GridLayout>
             )
@@ -383,9 +411,17 @@ function ReactGridLayoutHandler() {
 
 export
     class ReactGridLayoutModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), cols: 12, rowHeight:30, width: 1200 } };
-    autoProps = ['layout', 'cols', 'rowHeight', 'width']
-    //reactComponent = () => BasicWidget(GridLayout)
+    defaults = () => {
+        return {
+            ...super.defaults(),
+            className: 'layout',
+            cols: 12,
+            rowHeight:30,
+            width: 1200,
+            draggableHandle: ''
+        }
+    };
+    autoProps = ['layout', 'className', 'cols', 'rowHeight', 'width', 'draggableHandle']
     reactComponent = () => ReactGridLayoutHandler()
 }
 

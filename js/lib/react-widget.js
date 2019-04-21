@@ -2,12 +2,27 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as _ from 'lodash';
 import { camelCase, snakeCase } from 'lodash';
-import * as widgets from '@jupyter-widgets/base';
+import { 
+    DOMWidgetModel, DOMWidgetView, unpack_models, ViewList
+} from '@jupyter-widgets/base';
 
-// TODO: move UI specific parts (such as style) to subclass
+/*
+import {
+    ArrayExt
+} from '@phosphor/algorithm';
+
+import {
+    MessageLoop, Message
+} from '@phosphor/messaging';
+
+import {
+    Widget, Panel
+} from '@phosphor/widgets';
+*/
+
 export
-    class ReactModel extends widgets.DOMWidgetModel {
-    // defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
+    class ReactModel extends DOMWidgetModel {
+    // defaults: _.extend(DOMWidgetModel.prototype.defaults(), {
     defaults() {
         return _.extend(super.defaults(), {
             _model_name: 'ReactModel',
@@ -94,12 +109,14 @@ export
     getChildWidgetComponent(name) {
         let widget = this.get(name);
         if (!widget) {
+            console.log('Null widget, do nothing')
             return null;
         }
         if (widget instanceof ReactModel) {
+            console.log('React widget')
             return widget.createWrappedReactElement()
         } else {
-            console.log('no react widget, using blackbox')
+            console.log('Not React widget, using BlackboxWidget')
             return <BlackboxWidget widget={widget}></BlackboxWidget>
         }
     }
@@ -107,8 +124,10 @@ export
         let widgetList = this.get(name);
         return widgetList.map((widget) => {
             if (widget instanceof ReactModel) {
+                console.log('React widget')
                 return widget.createWrappedReactElement({ key: widget.cid })
             } else {
+                console.log('Not React widget, using BlackboxWidget')
                 return <BlackboxWidget widget={widget}></BlackboxWidget>
             }
         });
@@ -116,48 +135,85 @@ export
 }
 
 ReactModel.serializers = {
-    ...widgets.DOMWidgetModel.serializers,
-    children: { deserialize: widgets.unpack_models },
-    child: { deserialize: widgets.unpack_models },
-    // icon: {deserialize: widgets.unpack_models},
-    value: { deserialize: widgets.unpack_models },
-    control: { deserialize: widgets.unpack_models },
+    ...DOMWidgetModel.serializers,
+    children: { deserialize: unpack_models },
+    child: { deserialize: unpack_models },
+    // icon: {deserialize: unpack_models},
+    value: { deserialize: unpack_models },
+    control: { deserialize: unpack_models },
 };
 
 export
-    var ReactView = widgets.DOMWidgetView.extend({
-        render: function () {
-            // this.model.on('change', this.react_render, this);
-            this.root_element = document.createElement("div")
-            this.react_render();
-            this.el.appendChild(this.root_element)
-        },
+class ReactView extends DOMWidgetView {
 
-        react_render: function () {
-            this.react_element = this.model.createWrappedReactElement({})
-            ReactDOM.render(<div>{this.react_element}</div>, this.root_element);
-            // this.app = this.model.createWrappedReactComponent()
-            // ReactDOM.render(this.app, this.app_element);
-        },
+    initialize(parameters) {
+        super.initialize(parameters);
+        //this.children_views = new ViewList(this.add_child_model, null, this);
+        //this.listenTo(this.model, 'change:children', this.update_children);
+        //this.listenTo(this.model, 'change:box_style', this.update_box_style);
 
-    });
+        //this.pWidget.addClass('jupyter-widgets');
+        //this.pWidget.addClass('widget-container');
+        //this.pWidget.addClass('widget-box');
+    }
+
+    render() {
+        console.log('ReactView > render')
+        
+        super.render();
+
+        // Wrap element
+        const root_element = document.createElement("div")
+        
+        // React render
+        const react_element = this.model.createWrappedReactElement({})
+        console.log(react_element)
+        ReactDOM.render(react_element, root_element)
+
+        // Append to Backbone.View
+        this.el.appendChild(root_element)
+    }
+
+    /*
+    add_child_model(model) {
+        // we insert a dummy element so the order is preserved when we add
+        // the rendered content later.
+        let dummy = new Widget();
+        this.pWidget.addWidget(dummy);
+
+        return this.create_child_view(model).then((view) => {
+            // replace the dummy widget with the new one.
+            let i = ArrayExt.firstIndexOf(this.pWidget.widgets, dummy);
+            this.pWidget.insertWidget(i, view.pWidget);
+            dummy.dispose();
+            return view;
+        }).catch(reject('Could not add child view to box', true));
+    }
+    */
+}
 
 // this is a black box for React, but renders a plain Jupyter DOMWidget
 class BlackboxWidget extends React.Component {
+
     componentDidMount() {
+        console.log('BlackboxWidget > componentDidMount')
         let widget = this.props.widget;
         let manager = widget.widget_manager;
+        console.log('widget', widget)
         manager.create_view(widget).then((view) => {
+            console.log(view)
             this.view = view;
             this.el.appendChild(this.view.el)
         });
     }
 
     componentWillUnmount() {
+        console.log('BlackboxWidget > componentWillUnmount')
         // TODO: destroy the view?
     }
 
     render() {
+        console.log('BlackboxWidget > render')
         return <div ref={el => this.el = el} />;
     }
 }

@@ -73,6 +73,8 @@ class ReactGridLayout(ReactWidget):
     cols        = CInt(12, help="cols").tag(sync=True)
     row_height  = CInt(30, help="row_height").tag(sync=True)
     width       = CInt(900, help="width").tag(sync=True)
+    class_name  = Unicode('layout', help="class_name").tag(sync=True)
+    draggable_handle = Unicode('', help="draggable_handle").tag(sync=True)
 
 class ReactGridLayoutItem(ReactWidget):
     _model_name = Unicode('ReactGridLayoutItemModel').tag(sync=True)
