@@ -38,12 +38,13 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@jupyter-widgets/base": "^1.0.0",
-    "antd": "^3.16.3",
-    "react-grid-layout": "^0.16.6",
+    "@jupyter-widgets/base": "^1.2.4",
+    "@jupyter-widgets/controls": "^1.4.4",
+    "antd": "^3.16.4",
     "lodash": "^4.17.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-grid-layout": "^0.16.6",
     "typeface-roboto": "0.0.54"
   },
   "babel": {

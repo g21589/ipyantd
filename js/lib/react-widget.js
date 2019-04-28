@@ -5,20 +5,15 @@ import { camelCase, snakeCase } from 'lodash';
 import { 
     DOMWidgetModel, DOMWidgetView, unpack_models, ViewList
 } from '@jupyter-widgets/base';
-
 /*
-import {
-    ArrayExt
-} from '@phosphor/algorithm';
-
 import {
     MessageLoop, Message
 } from '@phosphor/messaging';
-
+*/
 import {
     Widget, Panel
 } from '@phosphor/widgets';
-*/
+
 
 export
     class ReactModel extends DOMWidgetModel {
@@ -148,13 +143,6 @@ class ReactView extends DOMWidgetView {
 
     initialize(parameters) {
         super.initialize(parameters);
-        //this.children_views = new ViewList(this.add_child_model, null, this);
-        //this.listenTo(this.model, 'change:children', this.update_children);
-        //this.listenTo(this.model, 'change:box_style', this.update_box_style);
-
-        //this.pWidget.addClass('jupyter-widgets');
-        //this.pWidget.addClass('widget-container');
-        //this.pWidget.addClass('widget-box');
     }
 
     render() {
@@ -174,22 +162,6 @@ class ReactView extends DOMWidgetView {
         this.el.appendChild(root_element)
     }
 
-    /*
-    add_child_model(model) {
-        // we insert a dummy element so the order is preserved when we add
-        // the rendered content later.
-        let dummy = new Widget();
-        this.pWidget.addWidget(dummy);
-
-        return this.create_child_view(model).then((view) => {
-            // replace the dummy widget with the new one.
-            let i = ArrayExt.firstIndexOf(this.pWidget.widgets, dummy);
-            this.pWidget.insertWidget(i, view.pWidget);
-            dummy.dispose();
-            return view;
-        }).catch(reject('Could not add child view to box', true));
-    }
-    */
 }
 
 // this is a black box for React, but renders a plain Jupyter DOMWidget
@@ -203,7 +175,25 @@ class BlackboxWidget extends React.Component {
         manager.create_view(widget).then((view) => {
             console.log(view)
             this.view = view;
-            this.el.appendChild(this.view.el)
+
+            //MessageLoop.sendMessage(view, Widget.Msg.BeforeAttach);
+            try {
+                view.pWidget.processMessage(Widget.Msg.BeforeAttach);
+            } catch (e) {
+                console.log(e);
+                view.processPhosphorMessage(Widget.Msg.BeforeAttach);
+            }
+            
+            this.el.appendChild(this.view.el);
+
+            //MessageLoop.sendMessage(view, Widget.Msg.AfterAttach);
+            try {
+                view.pWidget.processMessage(Widget.Msg.AfterAttach);
+            } catch (e) {
+                console.log(e);
+                view.processPhosphorMessage(Widget.Msg.AfterAttach);
+            }
+            
         });
     }
 
