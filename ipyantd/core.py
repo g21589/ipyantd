@@ -529,3 +529,48 @@ class Progress(ReactWidget):
 class Popconfirm(ReactWidget):
     _model_name = Unicode('PopconfirmModel').tag(sync=True)
     title = Unicode('Title', allow_none=True, help="title").tag(sync=True)
+
+class Spin(ReactWidget):
+    _model_name = Unicode('SpinModel').tag(sync=True)
+    delay       = CFloat(0, help="delay").tag(sync=True)
+    size        = Unicode('default', help="size").tag(sync=True)
+    spinning    = CBool(True, help="spinning").tag(sync=True)
+    tip         = Unicode('', help="tip").tag(sync=True)
+
+class Skeleton(ReactWidget):
+    _model_name = Unicode('SkeletonModel').tag(sync=True)
+    active      = CBool(False, help="active").tag(sync=True)
+    avatar      = CBool(False, help="avatar").tag(sync=True)
+    loading     = CBool(False, help="loading").tag(sync=True)
+    paragraph   = CBool(True, help="paragraph").tag(sync=True)
+    title       = CBool(True, help="title").tag(sync=True)
+
+class Anchor(ReactWidget):
+    _model_name = Unicode('AnchorModel').tag(sync=True)
+    affix       = CBool(True, help="affix").tag(sync=True)
+    bounds      = CFloat(5, help="bounds").tag(sync=True)
+    show_ink_in_fixed = CBool(False, help="show_ink_in_fixed").tag(sync=True)
+
+class AnchorLink(ReactWidget):
+    _model_name = Unicode('AnchorLinkModel').tag(sync=True)
+    href        = Unicode('', help="href").tag(sync=True)
+    title       = Unicode('', help="title").tag(sync=True)
+
+class BackTop(ReactWidget):
+    _model_name = Unicode('BackTopModel').tag(sync=True)
+    visibility_height = CFloat(400, help="visibility_height").tag(sync=True)
+
+class ConfigProvider(ReactWidget):
+    _model_name = Unicode('ConfigProviderModel').tag(sync=True)
+    auto_insert_space_in_button = CBool(True, help="auto_insert_space_in_button").tag(sync=True)
+    prefix_cls = Unicode('ant', help="prefix_cls").tag(sync=True)
+
+class Divider(ReactWidget):
+    _model_name = Unicode('DividerModel').tag(sync=True)
+    dashed      = CBool(False, help="dashed").tag(sync=True)
+    orientation = Unicode('center', help="orientation").tag(sync=True)
+    type        = Unicode('horizontal', help="type").tag(sync=True)
+
+class LocaleProvider(ReactWidget):
+    _model_name = Unicode('LocaleProviderModel').tag(sync=True)
+    locale      = Dict(help="locale").tag(sync=True)

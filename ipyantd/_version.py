@@ -1,4 +1,4 @@
-version_info = (0, 1, 7, 'alpha', 5)
+version_info = (0, 1, 7, 'final', 0)
 
 _specifier_ = {
 	'alpha'     : 'a',

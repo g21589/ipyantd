@@ -1064,3 +1064,74 @@ export
     autoProps = ['title']
     reactComponent = () => PopconfirmHandler(BasicWidget(Popconfirm))
 }
+
+// Spin
+import { Spin } from 'antd';
+export
+    class SpinModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['delay', 'size', 'spinning', 'tip']
+    reactComponent = () => BasicWidget(Spin, true)
+}
+
+// Skeleton
+import { Skeleton } from 'antd';
+export
+    class SkeletonModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['active', 'avatar', 'loading', 'paragraph', 'title']
+    reactComponent = () => BasicWidget(Skeleton, true)
+}
+
+// Anchor
+import { Anchor } from 'antd';
+export
+    class AnchorModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['affix', 'bounds', 'showInkInFixed']
+    reactComponent = () => BasicWidget(Anchor)
+}
+
+// AnchorLink
+export
+    class AnchorLinkModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['href', 'title']
+    reactComponent = () => BasicWidget(Anchor.Link)
+}
+
+// BackTop
+import { BackTop } from 'antd';
+export
+    class BackTopModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['visibilityHeight']
+    reactComponent = () => BasicWidget(BackTop)
+}
+
+// ConfigProvider
+import { ConfigProvider } from 'antd';
+export
+    class ConfigProviderModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['autoInsertSpaceInButton', 'prefixCls']
+    reactComponent = () => BasicWidget(ConfigProvider)
+}
+
+// Divider
+import { Divider } from 'antd';
+export
+    class DividerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['dashed', 'orientation', 'type']
+    reactComponent = () => BasicWidget(Divider)
+}
+
+// LocaleProvider
+import { LocaleProvider } from 'antd';
+export
+    class LocaleProviderModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['locale']
+    reactComponent = () => BasicWidget(LocaleProvider)
+}
