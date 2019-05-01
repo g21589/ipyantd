@@ -497,6 +497,130 @@ export
     reactComponent = () => BasicWidget(Typography.Paragraph)
 }
 
+// Affix
+import { Affix } from 'antd';
+export
+    class AffixModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['offsetBottom', 'offsetTop']
+    reactComponent = () => BasicWidget(Affix)
+}
+
+// Breadcrumb
+import { Breadcrumb } from 'antd';
+export
+    class BreadcrumbModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), separator: '/' } };
+    autoProps = ['separator']
+    reactComponent = () => BasicWidget(Breadcrumb)
+}
+
+// BreadcrumbItem
+import { BreadcrumbItem } from 'antd';
+export
+    class BreadcrumbItemModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(BreadcrumbItem)
+}
+
+// Dropdown
+import { Dropdown } from 'antd';
+export
+    class DropdownModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['overlay']
+    reactComponent = () => BasicWidget(Dropdown)
+}
+
+// Menu
+import { Menu } from 'antd';
+export
+    class MenuModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['mode', 'theme', 'inlineCollapsed', 'inlineIndent', 
+                 'multiple', 'selectable']
+    reactComponent = () => BasicWidget(Menu)
+}
+
+// MenuItem
+export
+    class MenuItemModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['disabled', 'key', 'title']
+    reactComponent = () => BasicWidget(Menu.Item)
+}
+
+// MenuSubMenu
+export
+    class MenuSubMenuModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['disabled', 'key', 'title']
+    reactComponent = () => BasicWidget(Menu.SubMenu)
+}
+
+// MenuItemGroup
+export
+    class MenuItemGroupModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['title']
+    reactComponent = () => BasicWidget(Menu.ItemGroup)
+}
+
+// MenuDivider
+export
+    class MenuDividerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = []
+    reactComponent = () => BasicWidget(Menu.Divider)
+}
+
+// Pagination
+import { Pagination } from 'antd';
+export
+    class PaginationModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['current', 'defaultCurrent', 'total', 'defaultPageSize', 'size',
+                 'showSizeChanger', 'simple']
+    reactComponent = () => BasicWidget(Pagination)
+}
+
+// PageHeader
+import { PageHeader } from 'antd';
+export
+    class PageHeaderModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['title', 'subTitle']
+    reactComponent = () => BasicWidget(PageHeader, true)
+}
+
+// Steps
+import { Steps } from 'antd';
+const Step = Steps.Step;
+export
+    class StepsModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), current: 0, direction: 'horizontal', progressDot: false, initial: 0, size: 'default'} };
+    autoProps = ['current', 'direction', 'progressDot', 'initial', 'size']
+    reactComponent = () => BasicWidget(Steps)
+}
+
+// Step
+export
+    class StepModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), title: '', description: ''/*, status: null, icon: null*/} };
+    autoProps = ['title', 'description'] //, 'status', 'icon']
+    reactComponent = () => BasicWidget(Step)
+}
+
+// AutoComplete
+import { AutoComplete } from 'antd';
+export
+    class AutoCompleteModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['dataSource', 'placeholder']
+    reactComponent = () => BasicWidget(AutoComplete)
+}
+
 // Form
 import { Form } from 'antd';
 export
@@ -676,33 +800,6 @@ export
     reactComponent = () => MomentValueHandler(WeekPicker)
 }
 
-// Progress
-import { Progress } from 'antd';
-export
-    class ProgressModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), percent: 50.0, type: 'line'} };
-    autoProps = ['percent', 'type']
-    reactComponent = () => BasicWidget(Progress)
-}
-
-// Steps
-import { Steps } from 'antd';
-const Step = Steps.Step;
-export
-    class StepsModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), current: 0, direction: 'horizontal', progressDot: false, initial: 0, size: 'default'} };
-    autoProps = ['current', 'direction', 'progressDot', 'initial', 'size']
-    reactComponent = () => BasicWidget(Steps)
-}
-
-// Step
-export
-    class StepModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), title: '', description: ''/*, status: null, icon: null*/} };
-    autoProps = ['title', 'description'] //, 'status', 'icon']
-    reactComponent = () => BasicWidget(Step)
-}
-
 // Transfer
 import { Transfer } from 'antd';
 export
@@ -710,6 +807,15 @@ export
     defaults = () => { return { ...super.defaults(), dataSource: [], targetKeys: [], showSearch: false } };
     autoProps = ['dataSource', 'showSearch', 'targetKeys']
     reactComponent = () => TransferHandler(BasicWidget(Transfer))
+}
+
+// Upload
+import { Upload } from 'antd';
+export
+    class UploadModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['name', 'multiple', 'listType']
+    reactComponent = () => BasicWidget(Upload)
 }
 
 // Avatar
@@ -939,6 +1045,15 @@ export
     defaults = () => { return { ...super.defaults(), title: 'Title', visible: false } };
     autoProps = ['title', 'visible']
     reactComponent = () => ModelHandler(BasicWidget(Model))
+}
+
+// Progress
+import { Progress } from 'antd';
+export
+    class ProgressModel extends ReactModel {
+    defaults = () => { return { ...super.defaults(), percent: 50.0, type: 'line'} };
+    autoProps = ['percent', 'type']
+    reactComponent = () => BasicWidget(Progress)
 }
 
 // Popconfirm

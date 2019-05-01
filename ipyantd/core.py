@@ -145,6 +145,95 @@ class Paragraph(ReactWidget):
     strong      = CBool(False, help="strong").tag(sync=True)
     type        = Unicode('', help='type').tag(sync=True)
 
+class Affix(ReactWidget):
+    _model_name = Unicode('AffixModel').tag(sync=True)
+    offset_bottom = CFloat(help="offset_bottom").tag(sync=True)
+    offset_top = CFloat(help="offset_top").tag(sync=True)
+
+class Breadcrumb(ReactWidget):
+    _model_name = Unicode('BreadcrumbModel').tag(sync=True)
+    separator = Unicode('/', help='separator').tag(sync=True)
+
+class BreadcrumbItem(ReactWidget):
+    _model_name = Unicode('BreadcrumbItemModel').tag(sync=True)
+    
+class Dropdown(ReactWidget):
+    _model_name = Unicode('DropdownModel').tag(sync=True)
+    overlay = Instance('ipywidgets.widgets.domwidget.DOMWidget', default_value=None, allow_none=False)\
+                .tag(sync=True, **widget_serialization).tag(sync=True)
+    # TODO
+
+class Menu(ReactWidget):
+    _model_name      = Unicode('MenuModel').tag(sync=True)
+    mode             = Unicode('vertical', help='mode').tag(sync=True)
+    theme            = Unicode('light', help='theme').tag(sync=True)
+    inline_collapsed = CBool(True, help="inline_collapsed").tag(sync=True)
+    inline_indent    = CFloat(24, help="inline_indent").tag(sync=True)
+    multiple         = CBool(False, help="multiple").tag(sync=True)
+    selectable       = CBool(True, help="multiple").tag(sync=True)
+    # TODO
+
+class MenuItem(ReactWidget):
+    _model_name = Unicode('MenuItemModel').tag(sync=True)
+    disabled    = CBool(False, help='disabled').tag(sync=True)
+    key         = Unicode('', help='key').tag(sync=True)
+    title       = Unicode('', help='title').tag(sync=True)
+
+class MenuSubMenu(ReactWidget):
+    _model_name = Unicode('MenuSubMenuModel').tag(sync=True)
+    disabled    = CBool(False, help='disabled').tag(sync=True)
+    key         = Unicode('', help='key').tag(sync=True)
+    title       = Unicode('', help='title').tag(sync=True)
+    # TODO
+
+class MenuItemGroup(ReactWidget):
+    _model_name = Unicode('MenuItemGroupModel').tag(sync=True)
+    title       = Unicode('', help='title').tag(sync=True)
+    # TODO
+
+class MenuDivider(ReactWidget):
+    _model_name = Unicode('MenuDividerModel').tag(sync=True)
+    # TODO
+
+class Pagination(ReactWidget):
+    _model_name       = Unicode('PaginationModel').tag(sync=True)
+    current           = CInt(1, help="current").tag(sync=True)
+    default_current   = CInt(1, help="default_current").tag(sync=True)
+    total             = CInt(50, help="total").tag(sync=True)
+    default_page_size = CInt(10, help="default_page_size").tag(sync=True)
+    size              = Unicode('', help="size").tag(sync=True)
+    show_size_changer = CBool(False, help='show_size_changer').tag(sync=True)
+    simple            = CBool(False, help='simple').tag(sync=True)
+    # TODO
+
+class PageHeader(ReactWidget):
+    _model_name = Unicode('PageHeaderModel').tag(sync=True)
+    title       = Unicode('', help='title').tag(sync=True)
+    sub_title    = Unicode('', help='sub_title').tag(sync=True)
+    # TODO
+
+class Steps(ReactWidget, SizeMixin):
+    _model_name = Unicode('StepsModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+    current = CInt(help="current").tag(sync=True)
+    direction = Unicode('horizontal', allow_none=True, help="direction").tag(sync=True)
+    label_placement = Unicode(None, allow_none=True, help="label_placement").tag(sync=True)
+    progress_dot = CBool(False, allow_none=True, help="progress_dot").tag(sync=True)
+    status = Unicode(None, allow_none=True, help="status").tag(sync=True)
+    initial = CInt(0, allow_none=True, help="initial").tag(sync=True)
+
+class Step(ReactWidget):
+    _model_name = Unicode('StepModel').tag(sync=True)
+    description = Unicode(None, allow_none=True, help="description").tag(sync=True)
+    icon = Unicode(None, allow_none=True, help="icon").tag(sync=True)
+    status = Unicode(None, allow_none=True, help="status").tag(sync=True)
+    title = Unicode(help="title").tag(sync=True)
+
+class AutoComplete(ReactWidget):
+    _model_name = Unicode('AutoCompleteModel').tag(sync=True)
+    data_source = List(help='data_source').tag(sync=True)
+    placeholder = Unicode('Type something...', help='placeholder').tag(sync=True)
+
 class Form(ReactWidget):
     _model_name = Unicode('FormModel').tag(sync=True)
     label_col   = Dict(help='label_col').tag(sync=True)
@@ -251,34 +340,18 @@ class WeekPicker(ReactWidget, ValueMixin):
     _model_name = Unicode('WeekPickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
 
-class Progress(ReactWidget):
-    _model_name = Unicode('ProgressModel').tag(sync=True)
-    description = Unicode(help="description").tag(sync=True)
-    percent = CFloat(help="percent").tag(sync=True)
-    type = Unicode(help="type").tag(sync=True)
-
-class Steps(ReactWidget, SizeMixin):
-    _model_name = Unicode('StepsModel').tag(sync=True)
-    description = Unicode(help="description").tag(sync=True)
-    current = CInt(help="current").tag(sync=True)
-    direction = Unicode('horizontal', allow_none=True, help="direction").tag(sync=True)
-    label_placement = Unicode(None, allow_none=True, help="label_placement").tag(sync=True)
-    progress_dot = CBool(False, allow_none=True, help="progress_dot").tag(sync=True)
-    status = Unicode(None, allow_none=True, help="status").tag(sync=True)
-    initial = CInt(0, allow_none=True, help="initial").tag(sync=True)
-
-class Step(ReactWidget):
-    _model_name = Unicode('StepModel').tag(sync=True)
-    description = Unicode(None, allow_none=True, help="description").tag(sync=True)
-    icon = Unicode(None, allow_none=True, help="icon").tag(sync=True)
-    status = Unicode(None, allow_none=True, help="status").tag(sync=True)
-    title = Unicode(help="title").tag(sync=True)
-
 class Transfer(ReactWidget):
     _model_name = Unicode('TransferModel').tag(sync=True)
     data_source = List(help="data_source").tag(sync=True)
     show_search = CBool(False, allow_none=True, help="show_search").tag(sync=True)
     target_keys = List(help="target_keys").tag(sync=True)
+
+class Upload(ReactWidget):
+    _model_name = Unicode('UploadModel').tag(sync=True)
+    name        = Unicode('file', help="name").tag(sync=True)
+    multiple    = CBool(False, help="multiple").tag(sync=True)
+    list_type   = Unicode('text', help="list_type").tag(sync=True)
+    # TODO
 
 class Avatar(ReactWidget):
     _model_name = Unicode('AvatarModel').tag(sync=True)
@@ -446,6 +519,12 @@ class Model(ReactWidget):
     _model_name = Unicode('ModelModel').tag(sync=True)
     title = Unicode('Title', allow_none=True, help="title").tag(sync=True)
     visible = CBool(False, allow_none=True, help="visible").tag(sync=True)
+
+class Progress(ReactWidget):
+    _model_name = Unicode('ProgressModel').tag(sync=True)
+    description = Unicode(help="description").tag(sync=True)
+    percent = CFloat(help="percent").tag(sync=True)
+    type = Unicode(help="type").tag(sync=True)
 
 class Popconfirm(ReactWidget):
     _model_name = Unicode('PopconfirmModel').tag(sync=True)
