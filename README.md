@@ -1,6 +1,7 @@
 ipyantd
 ===============================
 [![PyPI version](https://badge.fury.io/py/ipyantd.svg)](https://badge.fury.io/py/ipyantd)
+[![MIT License][license-image]][license-url]
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/g21589/ipyantd/master?filepath=ipyantd_test.ipynb)
 
 Ant Design Jupyter Widget
@@ -35,3 +36,12 @@ Support Components
 | DatePicker |     essential     |
 | Progress   |     essential     |
 | Steps      |     essential     |
+
+
+License
+----
+
+MIT
+
+[license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[license-url]: LICENSE
