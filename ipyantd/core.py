@@ -80,6 +80,14 @@ class ReactGridLayoutItem(ReactWidget):
     _model_name = Unicode('ReactGridLayoutItemModel').tag(sync=True)
     key = Unicode(help="key").tag(sync=True)
 
+class ReactEcharts(ReactWidget):
+    _model_name = Unicode('ReactEchartsModel').tag(sync=True)
+    option      = Dict(help='option').tag(sync=True)
+    not_merge   = CBool(False, help="not_merge").tag(sync=True)
+    lazy_update = CBool(False, help="lazy_update").tag(sync=True)
+    theme       = Unicode('shine', help="theme").tag(sync=True)
+    opts        = Dict({}, help='opts').tag(sync=True)
+
 class Row(ReactWidget):
     _model_name = Unicode('RowModel').tag(sync=True)
     align   = Unicode('top', help="align").tag(sync=True)

@@ -443,6 +443,15 @@ export
     reactComponent = () => ReactGridLayoutItemHandler()
 }
 
+// ReactEcharts
+import ReactEcharts from 'echarts-for-react';
+export
+    class ReactEchartsModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['option', 'notMerge', 'lazyUpdate', 'theme', 'opts']
+    reactComponent = () => BasicWidget(ReactEcharts, true)
+}
+
 // Row
 import { Row, Col } from 'antd';
 export
@@ -951,12 +960,65 @@ export
 
 // Tree
 import { Tree } from 'antd';
+const { TreeNode } = Tree;
+
+function SimpleTreeWidget() {
+    return class extends BackboneWidget {
+        onSelectHandler = (selectedKeys, info) => {
+            console.log('selected', selectedKeys, info);
+        }
+        onCheckHandler = (checkedKeys, info) => {
+            console.log('onCheck', checkedKeys, info);
+        }
+        render() {
+            let { model, ...props } = this.stateProps();
+            return (
+                <Tree
+                    checkable
+                    defaultExpandedKeys={['0-0-0', '0-0-1']}
+                    defaultSelectedKeys={['0-0-0', '0-0-1']}
+                    defaultCheckedKeys={['0-0-0', '0-0-1']}
+                    onSelect={this.onSelectHandler}
+                    onCheck={this.onCheckHandler}
+                >
+                    <TreeNode title="parent 1" key="0-0">
+                    <TreeNode title="parent 1-0" key="0-0-0" disabled>
+                        <TreeNode title="leaf" key="0-0-0-0" disableCheckbox />
+                        <TreeNode title="leaf" key="0-0-0-1" />
+                    </TreeNode>
+                    <TreeNode title="parent 1-1" key="0-0-1">
+                        <TreeNode title={<span style={{ color: '#1890ff' }}>sss</span>} key="0-0-1-0" />
+                    </TreeNode>
+                    </TreeNode>
+                </Tree>
+            );
+        }
+    }
+} 
+
 export
     class TreeModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['autoExpandParent', 'blockNode', 'checkable', 'multiple', 
                  'showLine', 'draggable']
-    reactComponent = () => BasicWidget(Tree)
+    //reactComponent = () => BasicWidget(Tree)
+    reactComponent = () => SimpleTreeWidget()
+}
+
+function TreeNodeWidget() {
+    return class extends BackboneWidget {
+        render() {
+            let { model, ...props } = this.stateProps();
+            return (
+                <TreeNode
+                    title={this.props.model.get('title')}
+                    key={this.props.model.get('key')}
+                >
+                    {props.children}
+                </TreeNode>
+            );
+        }
+    }
 }
 
 // TreeNode
@@ -965,7 +1027,7 @@ export
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['disableCheckbox', 'disabled', 'icon', 'isLeaf', 
                  'title', 'key', 'selectable']
-    reactComponent = () => BasicWidget(Tree.TreeNode)
+    reactComponent = () => TreeNodeWidget()
 }
 
 // Tooltip
