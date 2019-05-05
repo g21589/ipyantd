@@ -701,9 +701,47 @@ export
 import { Button } from 'antd';
 export
     class ButtonModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null, exclusive: false } };
-    autoProps = ['value', 'exclusive', 'type', 'size', 'icon']
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['disabled', 'ghost', 'loading', 'shape', 'type', 
+                 'size', 'icon', 'block']
     reactComponent = () => ClickWidget(Button)
+}
+
+// ExtButton
+function ExtButtonWidget(Component, isVoid=false) {
+    return class extends BackboneWidget {
+        onClickHandler(event) {
+            console.log("ExtButtonWidget > onClickHandler");
+            console.log(event, this);
+            eval(this.props.onClick)
+        }
+        render() {
+            let { model, ...props } = this.stateProps();
+            if (isVoid) {
+                console.log('isVoid');
+                delete props.children
+                return <Component {...props}/>
+            } else {
+                delete props.onClick
+                return (
+                    <Component 
+                        {...props}
+                        onClick={(event) => {this.onClickHandler(event)}}
+                    >
+                        {props.children}
+                    </Component>
+                )
+            }
+        }
+    }
+}
+
+export
+    class ExtButtonModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['disabled', 'ghost', 'loading', 'shape', 'type', 
+                 'size', 'icon', 'block', 'onClick']
+    reactComponent = () => ExtButtonWidget(Button)
 }
 
 // Switch
@@ -994,7 +1032,7 @@ function SimpleTreeWidget() {
             );
         }
     }
-} 
+}
 
 export
     class TreeModel extends ReactModel {

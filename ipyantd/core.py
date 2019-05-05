@@ -283,9 +283,26 @@ class ButtonBase(ReactWidget, ClickMixin):
 
 class Button(ButtonBase):
     _model_name = Unicode('ButtonModel').tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    ghost       = CBool(False, help="ghost").tag(sync=True)
+    loading     = CBool(False, help="loading").tag(sync=True)
+    shape       = Unicode('', help="shape").tag(sync=True)
     type        = Unicode('default', help="type").tag(sync=True)
     size        = Unicode('default', help="size").tag(sync=True)
     icon        = Unicode(help="icon").tag(sync=True)
+    block       = CBool(False, help="block").tag(sync=True)
+
+class ExtButton(ReactWidget):
+    _model_name = Unicode('ExtButtonModel').tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    ghost       = CBool(False, help="ghost").tag(sync=True)
+    loading     = CBool(False, help="loading").tag(sync=True)
+    shape       = Unicode('', help="shape").tag(sync=True)
+    type        = Unicode('default', help="type").tag(sync=True)
+    size        = Unicode('default', help="size").tag(sync=True)
+    icon        = Unicode(help="icon").tag(sync=True)
+    block       = CBool(False, help="block").tag(sync=True)
+    on_click    = Unicode('', help="on_click js code").tag(sync=True)
 
 class Switch(ButtonBase, ValueMixin):
     _model_name = Unicode('SwitchModel').tag(sync=True)
