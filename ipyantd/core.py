@@ -395,6 +395,9 @@ class Badge(ReactWidget):
 
 class Comment(ReactWidget):
     _model_name = Unicode('CommentModel').tag(sync=True)
+    author      = Unicode(help="author").tag(sync=True)
+    avatar      = Unicode(help="avatar").tag(sync=True)
+    datetime    = Unicode(help="datetime").tag(sync=True)
     # TODO
 
 class Collapse(ReactWidget):
@@ -425,7 +428,8 @@ class Carousel(ReactWidget):
 class Card(ReactWidget):
     _model_name = Unicode('CardModel').tag(sync=True)
     title = Unicode('', help="title").tag(sync=True)
-    extra = Unicode('', help="extra").tag(sync=True)
+    extra = Instance('ipywidgets.widgets.domwidget.DOMWidget', default_value=None, allow_none=True)\
+                .tag(sync=True, **widget_serialization).tag(sync=True)
     size  = Unicode('default', help="size").tag(sync=True)
     # TODO
 
@@ -434,7 +438,11 @@ class CardGrid(ReactWidget):
     class_name = Unicode('', help="class_name").tag(sync=True)
 
 class CardMeta(ReactWidget):
-    _model_name = Unicode('CardMetaModel').tag(sync=True)
+    _model_name  = Unicode('CardMetaModel').tag(sync=True)
+    avatar       = Unicode('', help="avatar").tag(sync=True)
+    class_name   = Unicode('', help="class_name").tag(sync=True)
+    description  = Unicode('', help="description").tag(sync=True)
+    title        = Unicode('', help="title").tag(sync=True)
 
 class Calendar(ReactWidget):
     _model_name = Unicode('CalendarModel').tag(sync=True)

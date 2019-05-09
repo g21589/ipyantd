@@ -888,7 +888,7 @@ import { Comment } from 'antd';
 export
     class CommentModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['author', 'avatar', 'datetime']
     reactComponent = () => BasicWidget(Comment)
 }
 
@@ -939,7 +939,7 @@ export
 export
     class CardMetaModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = []
+    autoProps = ['avatar', 'className', 'description', 'title']
     reactComponent = () => BasicWidget(Card.Meta)
 }
 
