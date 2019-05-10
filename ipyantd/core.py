@@ -75,6 +75,7 @@ class ReactGridLayout(ReactWidget):
     width       = CInt(900, help="width").tag(sync=True)
     class_name  = Unicode('layout', help="class_name").tag(sync=True)
     draggable_handle = Unicode('', help="draggable_handle").tag(sync=True)
+    draggable_cancel = Unicode('', help="draggable_cancel").tag(sync=True)
 
 class ReactGridLayoutItem(ReactWidget):
     _model_name = Unicode('ReactGridLayoutItemModel').tag(sync=True)
@@ -428,8 +429,7 @@ class Carousel(ReactWidget):
 class Card(ReactWidget):
     _model_name = Unicode('CardModel').tag(sync=True)
     title = Unicode('', help="title").tag(sync=True)
-    extra = Instance('ipywidgets.widgets.domwidget.DOMWidget', default_value=None, allow_none=True)\
-                .tag(sync=True, **widget_serialization).tag(sync=True)
+    extra = Instance('ipyantd.core.ReactWidget', allow_none=True).tag(sync=True, **widget_serialization)
     size  = Unicode('default', help="size").tag(sync=True)
     # TODO
 
@@ -543,10 +543,20 @@ class TimelineItem(ReactWidget):
     dot = Unicode(None, allow_none=True, help="dot").tag(sync=True)
 
 class Drawer(ReactWidget):
-    _model_name = Unicode('DrawerModel').tag(sync=True)
-    title = Unicode('Title', allow_none=True, help="title").tag(sync=True)
-    placement = Unicode('right', allow_none=True, help="placement").tag(sync=True)
-    visible = CBool(False, allow_none=True, help="visible").tag(sync=True)
+    _model_name      = Unicode('DrawerModel').tag(sync=True)
+    closable         = CBool(True, help="visible").tag(sync=True)
+    destroy_on_close = CBool(False, help="destroy_on_close").tag(sync=True)
+    get_container    = Unicode('body', help="get_container").tag(sync=True)
+    mask_closable    = CBool(True, help="mask_closable").tag(sync=True)
+    mask             = CBool(True, help="mask").tag(sync=True)
+    mask_style       = Dict(help="mask_style").tag(sync=True)
+    body_style       = Dict(help="body_style").tag(sync=True)
+    title            = Unicode('Title', help="title").tag(sync=True)
+    visible          = CBool(False, help="visible").tag(sync=True)
+    width            = CFloat(256, help="width").tag(sync=True)
+    height           = CFloat(256, help="height").tag(sync=True)
+    z_index          = CInt(1000, help="z_index").tag(sync=True)
+    placement        = Unicode('right', help="placement").tag(sync=True)
 
 class Model(ReactWidget):
     _model_name = Unicode('ModelModel').tag(sync=True)

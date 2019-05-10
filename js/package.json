@@ -40,7 +40,7 @@
   "dependencies": {
     "@jupyter-widgets/base": "^1.2.4",
     "@jupyter-widgets/controls": "^1.4.4",
-    "antd": "^3.16.4",
+    "antd": "^3.17.0",
     "echarts": "^4.2.1",
     "echarts-for-react": "^2.0.15-beta.0",
     "lodash": "^4.17.4",

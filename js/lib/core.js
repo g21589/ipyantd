@@ -421,7 +421,7 @@ export
             draggableHandle: ''
         }
     };
-    autoProps = ['layout', 'className', 'cols', 'rowHeight', 'width', 'draggableHandle']
+    autoProps = ['layout', 'className', 'cols', 'rowHeight', 'width', 'draggableHandle', 'draggableCancel']
     reactComponent = () => ReactGridLayoutHandler()
 }
 
@@ -924,6 +924,7 @@ export
     class CardModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['title', 'extra', 'size']
+    widgetProps = ['extra']
     reactComponent = () => BasicWidget(Card)
 }
 
@@ -1134,7 +1135,8 @@ import { Drawer } from 'antd';
 export
     class DrawerModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), title: 'Title', placement: 'right', visible: false } };
-    autoProps = ['title', 'placement', 'visible']
+    autoProps = ['closable', 'destroyOnClose', 'getContainer', 'maskClosable', 'mask', 'maskStyle',
+                 'bodyStyle', 'title', 'visible', 'width', 'height', 'zIndex', 'placement']
     reactComponent = () => DrawerHandler(BasicWidget(Drawer))
 }
 

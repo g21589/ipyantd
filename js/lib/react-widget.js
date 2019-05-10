@@ -30,7 +30,9 @@ export
     }
     autoProps = []
     reactComponent = () => Dummy
-    getProps = () => { return { model: this, ...this.genProps() } }
+    getProps = () => { 
+        return { model: this, ...this.genProps() } 
+    }
     genProps(props) {
         
         console.log("--- genProps(props) ---")
@@ -106,8 +108,7 @@ export
         if (!widget) {
             console.log('Null widget, do nothing')
             return null;
-        }
-        if (widget instanceof ReactModel) {
+        } else if (widget instanceof ReactModel) {
             console.log('React widget')
             return widget.createWrappedReactElement()
         } else {
@@ -136,6 +137,7 @@ ReactModel.serializers = {
     // icon: {deserialize: unpack_models},
     value: { deserialize: unpack_models },
     control: { deserialize: unpack_models },
+    extra: { deserialize: unpack_models }
 };
 
 export
