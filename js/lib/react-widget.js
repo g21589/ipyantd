@@ -52,7 +52,7 @@ export
             })
         }
         
-        const autoProps = ['style', ...this.autoProps]
+        const autoProps = ['style', 'className', ...this.autoProps]
         autoProps.forEach((key, idx) => {
             let attribute_key = snakeCase(key);
             console.log("  > ", idx, key, attribute_key)

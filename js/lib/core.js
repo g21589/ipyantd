@@ -1,11 +1,15 @@
 import * as React from 'react';
+import reactCSS from 'reactcss';
 import moment from 'moment';
 import { ReactModel } from './react-widget';
 import GridLayout from 'react-grid-layout';
-import 'antd/dist/antd.css';
-import './styles/ipyantd.css';
+
+//import 'antd/dist/antd.css';
+//import './styles/ipyantd.css';
+import 'antd/dist/antd.less';
+import './styles/ipyantd.less'
 import 'react-grid-layout/css/styles.css';
-//import 'react-resizable/css/styles.css';
+
 
 class BackboneWidget extends React.Component {
     constructor(props) {
@@ -27,14 +31,14 @@ class BackboneWidget extends React.Component {
 }
 
 // using higher-order component pattern
-function BasicWidget(Component, isVoid=false) {
+function BasicWidget(Component, isVoid = false) {
     return class extends BackboneWidget {
         render() {
             let { model, ...props } = this.stateProps();
             if (isVoid) {
                 console.log('isVoid');
                 delete props.children
-                return <Component {...props}/>
+                return <Component {...props} />
             } else {
                 return <Component {...props}>{props.children}</Component>
             }
@@ -234,7 +238,7 @@ function SelectHandler(Component) {
             let options = this.props.model.get('options') || [];
             let mode = this.props.model.get('mode');
             let style = this.props.model.get('style');
-            
+
             return (
                 <Select
                     mode={mode}
@@ -260,9 +264,9 @@ function TransferHandler(Component) {
         }
         onSearchHandler = (direction, value) => {
         }
-        render() {          
+        render() {
             return (
-                <Component {...this.props} render={item => item.title}/>
+                <Component {...this.props} render={item => item.title} />
             );
         }
     }
@@ -279,7 +283,7 @@ function DrawerHandler(Component) {
         render() {
             // Get status from `this.props.model` and then Render by `this.props`
             console.log('DrawerHandler > render', Component);
-            this.props.visible = this.props.model.get('visible');            
+            this.props.visible = this.props.model.get('visible');
             return (
                 <Component {...this.props} onClose={this.onCloseHandler}></Component>
             );
@@ -301,9 +305,9 @@ function ModelHandler(Component) {
         }
         render() {
             console.log('ModelHandler > render', Component);
-            this.props.visible = this.props.model.get('visible');            
+            this.props.visible = this.props.model.get('visible');
             return (
-                <Component 
+                <Component
                     {...this.props}
                     onOk={this.onOkHandler}
                     onCancel={this.onCancelHandler}
@@ -320,9 +324,9 @@ function PopconfirmHandler(Component) {
         }
         onCancelHandler = (event) => {
         }
-        render() {   
+        render() {
             return (
-                <Component 
+                <Component
                     {...this.props}
                     onConfirm={this.onConfirmHandler}
                     onCancel={this.onCancelHandler}
@@ -357,15 +361,15 @@ function ReactGridLayoutHandler() {
             this.props.model.save_changes();
             this.saveLayoutToLS('TEST', 'layout', layout)
         }
-        
+
         onResizeStartHandler = (layout, oldItem, newItem, placeholder, e, element) => {
             console.log('onResizeStart');
         }
-        
+
         onResizeHandler = (layout, oldItem, newItem, placeholder, e, element) => {
             console.log('onResize');
         }
-        
+
         onResizeStopHandler = (layout, oldItem, newItem, placeholder, e, element) => {
             console.log('onResizeStop');
         }
@@ -381,7 +385,7 @@ function ReactGridLayoutHandler() {
             }
             return ls[key];
         }
-          
+
         saveLayoutToLS = (apname, key, value) => {
             if (global.localStorage) {
                 global.localStorage.setItem(apname, JSON.stringify({ [key]: value }));
@@ -394,8 +398,8 @@ function ReactGridLayoutHandler() {
             let es = props.children.map((element, index) => <div key={index}>{element}</div>)
 
             return (
-                <GridLayout 
-                    {...props} 
+                <GridLayout
+                    {...props}
                     onLayoutChange={this.onLayoutChangeHandler}
                     onResizeStart={this.onResizeStartHandler}
                     onResize={this.onResizeHandler}
@@ -415,13 +419,14 @@ export
         return {
             ...super.defaults(),
             className: 'layout',
-            cols: 12,
-            rowHeight:30,
-            width: 1200,
+            cols: 24,
+            rowHeight: 48,
+            width: 900,
             draggableHandle: ''
         }
     };
-    autoProps = ['layout', 'className', 'cols', 'rowHeight', 'width', 'draggableHandle', 'draggableCancel']
+    autoProps = ['layout', 'className', 'cols', 'rowHeight', 'width',
+        'margin', 'draggableHandle', 'draggableCancel']
     reactComponent = () => ReactGridLayoutHandler()
 }
 
@@ -483,8 +488,8 @@ import { Typography } from 'antd';
 export
     class TextModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['code', 'copyable ', 'delete', 'disabled', 'editable', 
-                 'ellipsis', 'mark', 'underline', 'strong', 'type']
+    autoProps = ['code', 'copyable ', 'delete', 'disabled', 'editable',
+        'ellipsis', 'mark', 'underline', 'strong', 'type']
     reactComponent = () => BasicWidget(Typography.Text)
 }
 
@@ -492,8 +497,8 @@ export
 export
     class TitleModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['copyable ', 'delete', 'disabled', 'editable', 
-                 'ellipsis', 'mark', 'underline', 'strong', 'type', 'level']
+    autoProps = ['copyable ', 'delete', 'disabled', 'editable',
+        'ellipsis', 'mark', 'underline', 'strong', 'type', 'level']
     reactComponent = () => BasicWidget(Typography.Title)
 }
 
@@ -501,8 +506,8 @@ export
 export
     class ParagraphModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['copyable ', 'delete', 'disabled', 'editable', 
-                 'ellipsis', 'mark', 'underline', 'strong', 'type']
+    autoProps = ['copyable ', 'delete', 'disabled', 'editable',
+        'ellipsis', 'mark', 'underline', 'strong', 'type']
     reactComponent = () => BasicWidget(Typography.Paragraph)
 }
 
@@ -547,8 +552,8 @@ import { Menu } from 'antd';
 export
     class MenuModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['mode', 'theme', 'inlineCollapsed', 'inlineIndent', 
-                 'multiple', 'selectable']
+    autoProps = ['mode', 'theme', 'inlineCollapsed', 'inlineIndent',
+        'multiple', 'selectable']
     reactComponent = () => BasicWidget(Menu)
 }
 
@@ -590,7 +595,7 @@ export
     class PaginationModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['current', 'defaultCurrent', 'total', 'defaultPageSize', 'size',
-                 'showSizeChanger', 'simple']
+        'showSizeChanger', 'simple']
     reactComponent = () => BasicWidget(Pagination)
 }
 
@@ -608,7 +613,7 @@ import { Steps } from 'antd';
 const Step = Steps.Step;
 export
     class StepsModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), current: 0, direction: 'horizontal', progressDot: false, initial: 0, size: 'default'} };
+    defaults = () => { return { ...super.defaults(), current: 0, direction: 'horizontal', progressDot: false, initial: 0, size: 'default' } };
     autoProps = ['current', 'direction', 'progressDot', 'initial', 'size']
     reactComponent = () => BasicWidget(Steps)
 }
@@ -616,7 +621,7 @@ export
 // Step
 export
     class StepModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), title: '', description: ''/*, status: null, icon: null*/} };
+    defaults = () => { return { ...super.defaults(), title: '', description: ''/*, status: null, icon: null*/ } };
     autoProps = ['title', 'description'] //, 'status', 'icon']
     reactComponent = () => BasicWidget(Step)
 }
@@ -652,7 +657,7 @@ import { Input } from 'antd';
 export
     class InputModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, type: 'text' } };
-    autoProps = ['value', 'type']
+    autoProps = ['value', 'type', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Input, true))
 }
 
@@ -660,7 +665,7 @@ export
 export
     class TextAreaModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Input.TextArea))
 }
 
@@ -668,7 +673,7 @@ export
 export
     class SearchModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Input.Search, true))
 }
 
@@ -676,7 +681,7 @@ export
 export
     class InputGroupModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Input.Group))
 }
 
@@ -684,7 +689,7 @@ export
 export
     class PasswordModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Input.Password, true))
 }
 
@@ -693,7 +698,7 @@ import { InputNumber } from 'antd';
 export
     class InputNumberModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, min: -Infinity, max: Infinity } };
-    autoProps = ['value', 'min', 'max']
+    autoProps = ['value', 'min', 'max', 'size']
     reactComponent = () => ValueHandler(BasicWidget(InputNumber))
 }
 
@@ -702,13 +707,13 @@ import { Button } from 'antd';
 export
     class ButtonModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['disabled', 'ghost', 'loading', 'shape', 'type', 
-                 'size', 'icon', 'block']
+    autoProps = ['disabled', 'ghost', 'loading', 'shape', 'type',
+        'size', 'icon', 'block']
     reactComponent = () => ClickWidget(Button)
 }
 
 // ExtButton
-function ExtButtonWidget(Component, isVoid=false) {
+function ExtButtonWidget(Component, isVoid = false) {
     return class extends BackboneWidget {
         onClickHandler(event) {
             console.log("ExtButtonWidget > onClickHandler");
@@ -720,13 +725,13 @@ function ExtButtonWidget(Component, isVoid=false) {
             if (isVoid) {
                 console.log('isVoid');
                 delete props.children
-                return <Component {...props}/>
+                return <Component {...props} />
             } else {
                 delete props.onClick
                 return (
-                    <Component 
+                    <Component
                         {...props}
-                        onClick={(event) => {this.onClickHandler(event)}}
+                        onClick={(event) => { this.onClickHandler(event) }}
                     >
                         {props.children}
                     </Component>
@@ -739,8 +744,8 @@ function ExtButtonWidget(Component, isVoid=false) {
 export
     class ExtButtonModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['disabled', 'ghost', 'loading', 'shape', 'type', 
-                 'size', 'icon', 'block', 'onClick']
+    autoProps = ['disabled', 'ghost', 'loading', 'shape', 'type',
+        'size', 'icon', 'block', 'onClick']
     reactComponent = () => ExtButtonWidget(Button)
 }
 
@@ -749,7 +754,7 @@ import { Switch } from 'antd';
 export
     class SwitchModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, checked: false } };
-    autoProps = ['value', 'checked', 'checkedChildren', 'unCheckedChildren']
+    autoProps = ['value', 'checked', 'checkedChildren', 'unCheckedChildren', 'size']
     reactComponent = () => FixClickCapture(CheckedWidget(Switch))
 }
 
@@ -757,7 +762,7 @@ export
 import { Checkbox } from 'antd';
 export
     class CheckboxModel extends ReactModel {
-    autoProps = ['value', 'checked'];
+    autoProps = ['value', 'checked', 'size'];
     reactComponent = () => CheckedWidget(Checkbox)
 }
 
@@ -766,7 +771,7 @@ import { Cascader } from 'antd';
 export
     class CascaderModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), options: [] } };
-    autoProps = ['options']
+    autoProps = ['options', 'size']
     reactComponent = () => BasicWidget(Cascader, true)
 }
 
@@ -775,7 +780,7 @@ import { Radio } from 'antd';
 export
     class RadioModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => BasicWidget(Radio)
 }
 
@@ -791,7 +796,7 @@ export
 export
     class SelectModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), options: [], value: null, mode: 'default' } };
-    autoProps = ['value', 'options', 'mode']
+    autoProps = ['value', 'options', 'mode', 'size']
     //reactComponent = () => SelectHandler(BasicWidget(Select))
     reactComponent = () => SelectHandler(Select)
 }
@@ -809,7 +814,7 @@ import { Slider } from 'antd';
 export
     class SliderModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), min: 0, max: 100, value: '', range: false } };
-    autoProps = ['min', 'max', 'value', 'range']
+    autoProps = ['min', 'max', 'value', 'range', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Slider))
 }
 
@@ -819,7 +824,7 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 export
     class DatePickerModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: '' } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => MomentValueHandler(DatePicker)
 }
 
@@ -827,7 +832,7 @@ export
 export
     class MonthPickerModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: '' } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => MomentValueHandler(MonthPicker)
 }
 
@@ -835,7 +840,7 @@ export
 export
     class RangePickerModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: '' } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => MomentValueHandler(RangePicker)
 }
 
@@ -843,7 +848,7 @@ export
 export
     class WeekPickerModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: '' } };
-    autoProps = ['value']
+    autoProps = ['value', 'size']
     reactComponent = () => MomentValueHandler(WeekPicker)
 }
 
@@ -981,11 +986,31 @@ export
 
 // Popover
 import { Popover } from 'antd';
+function PopoverWidget(Component, isVoid = false) {
+    return class extends BackboneWidget {
+        render() {
+            let { model, ...props } = this.stateProps();
+            console.log(props)
+            return (
+                <Popover
+                    {...props}
+                    content={props.extra}
+                >
+                    {props.children}
+                </Popover>
+            )
+        }
+    }
+}
+
 export
     class PopoverModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['title']
-    reactComponent = () => BasicWidget(Popover)
+    autoProps = ['title', 'extra', 'arrowPointAtCenter', 'autoAdjustOverflow', 'defaultVisible',
+        'mouseEnterDelay', 'mouseLeaveDelay', 'overlayClassName',
+        'overlayStyle', 'placement', 'trigger']
+    widgetProps = ['extra']
+    reactComponent = () => PopoverWidget()
 }
 
 // Statistic
@@ -1021,13 +1046,13 @@ function SimpleTreeWidget() {
                     onCheck={this.onCheckHandler}
                 >
                     <TreeNode title="parent 1" key="0-0">
-                    <TreeNode title="parent 1-0" key="0-0-0" disabled>
-                        <TreeNode title="leaf" key="0-0-0-0" disableCheckbox />
-                        <TreeNode title="leaf" key="0-0-0-1" />
-                    </TreeNode>
-                    <TreeNode title="parent 1-1" key="0-0-1">
-                        <TreeNode title={<span style={{ color: '#1890ff' }}>sss</span>} key="0-0-1-0" />
-                    </TreeNode>
+                        <TreeNode title="parent 1-0" key="0-0-0" disabled>
+                            <TreeNode title="leaf" key="0-0-0-0" disableCheckbox />
+                            <TreeNode title="leaf" key="0-0-0-1" />
+                        </TreeNode>
+                        <TreeNode title="parent 1-1" key="0-0-1">
+                            <TreeNode title={<span style={{ color: '#1890ff' }}>sss</span>} key="0-0-1-0" />
+                        </TreeNode>
                     </TreeNode>
                 </Tree>
             );
@@ -1038,8 +1063,8 @@ function SimpleTreeWidget() {
 export
     class TreeModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['autoExpandParent', 'blockNode', 'checkable', 'multiple', 
-                 'showLine', 'draggable']
+    autoProps = ['autoExpandParent', 'blockNode', 'checkable', 'multiple',
+        'showLine', 'draggable']
     //reactComponent = () => BasicWidget(Tree)
     reactComponent = () => SimpleTreeWidget()
 }
@@ -1064,8 +1089,8 @@ function TreeNodeWidget() {
 export
     class TreeNodeModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['disableCheckbox', 'disabled', 'icon', 'isLeaf', 
-                 'title', 'key', 'selectable']
+    autoProps = ['disableCheckbox', 'disabled', 'icon', 'isLeaf',
+        'title', 'key', 'selectable']
     reactComponent = () => TreeNodeWidget()
 }
 
@@ -1074,7 +1099,9 @@ import { Tooltip } from 'antd';
 export
     class TooltipModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['title']
+    autoProps = ['arrowPointAtCenter', 'autoAdjustOverflow', 'defaultVisible',
+        'mouseEnterDelay', 'mouseLeaveDelay', 'overlayClassName',
+        'overlayStyle', 'placement', 'trigger', 'title']
     reactComponent = () => BasicWidget(Tooltip)
 }
 
@@ -1136,7 +1163,7 @@ export
     class DrawerModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), title: 'Title', placement: 'right', visible: false } };
     autoProps = ['closable', 'destroyOnClose', 'getContainer', 'maskClosable', 'mask', 'maskStyle',
-                 'bodyStyle', 'title', 'visible', 'width', 'height', 'zIndex', 'placement']
+        'bodyStyle', 'title', 'visible', 'width', 'height', 'zIndex', 'placement']
     reactComponent = () => DrawerHandler(BasicWidget(Drawer))
 }
 
@@ -1153,7 +1180,7 @@ export
 import { Progress } from 'antd';
 export
     class ProgressModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), percent: 50.0, type: 'line'} };
+    defaults = () => { return { ...super.defaults(), percent: 50.0, type: 'line' } };
     autoProps = ['percent', 'type']
     reactComponent = () => BasicWidget(Progress)
 }
@@ -1163,7 +1190,9 @@ import { Popconfirm } from 'antd';
 export
     class PopconfirmModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), title: 'Title' } };
-    autoProps = ['title']
+    autoProps = ['arrowPointAtCenter', 'autoAdjustOverflow', 'defaultVisible',
+        'mouseEnterDelay', 'mouseLeaveDelay', 'overlayClassName',
+        'overlayStyle', 'placement', 'trigger', 'title']
     reactComponent = () => PopconfirmHandler(BasicWidget(Popconfirm))
 }
 
@@ -1236,4 +1265,89 @@ export
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['locale']
     reactComponent = () => BasicWidget(LocaleProvider)
+}
+
+// ColorPicker
+import { SketchPicker } from 'react-color'
+
+function ColorPickerWidget(Component, isVoid = false) {
+    return class extends BackboneWidget {
+        state = {
+            displayColorPicker: false
+        };
+
+        handleClick = () => {
+            this.setState({ displayColorPicker: !this.state.displayColorPicker })
+        };
+
+        handleClose = () => {
+            this.setState({ displayColorPicker: false })
+        };
+
+        handleChange = (color) => {
+            this.props.model.set('color', color.rgb)
+            this.props.model.save_changes()
+        };
+
+        render() {
+
+            let { model, ...props } = this.stateProps();
+
+            const styles = reactCSS({
+                'default': {
+                    color: {
+                        width: '36px',
+                        height: '14px',
+                        borderRadius: '2px',
+                        background: `rgba(${props.color.r}, ${props.color.g}, ${props.color.b}, ${props.color.a})`,
+                    },
+                    swatch: {
+                        padding: '5px',
+                        background: '#fff',
+                        borderRadius: '1px',
+                        boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                        display: 'inline-block',
+                        cursor: 'pointer',
+                    },
+                    popover: {
+                        //position: 'absolute',
+                        zIndex: '1050',
+                    },
+                    cover: {
+                        position: 'fixed',
+                        top: '0px',
+                        right: '0px',
+                        bottom: '0px',
+                        left: '0px',
+                    },
+                },
+            });
+
+            return (
+                <div>
+                    <div style={styles.swatch} onClick={this.handleClick}>
+                        <div style={styles.color} />
+                    </div>
+                    {
+                        this.state.displayColorPicker ?
+                            <div style={styles.popover}>
+                                <div style={styles.cover} onClick={this.handleClose} />
+                                <Component
+                                    color={props.color}
+                                    onChange={this.handleChange}
+                                />
+                            </div> : null
+                    }
+                </div>
+            )
+
+        }
+    }
+}
+
+export
+    class ColorPickerModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['color']
+    reactComponent = () => ColorPickerWidget(SketchPicker)
 }

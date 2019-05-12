@@ -14,7 +14,7 @@ class LabelMixin:
     label = Unicode(help="label of the widget").tag(sync=True)
 
 class SizeMixin:
-    size = Unicode('default', allow_none=True, help="size of the widget").tag(sync=True)
+    size = Unicode('default', help="size of the widget").tag(sync=True)
 
 @widgets.register
 class ReactWidget(widgets.DOMWidget, ClickMixin):
@@ -32,6 +32,7 @@ class ReactWidget(widgets.DOMWidget, ClickMixin):
     visible = CBool(True).tag(sync=True)
     content = Unicode(help="").tag(sync=True)
     style = Dict().tag(sync=True)
+    class_name = Unicode('', help="class_name").tag(sync=True)
     # icon = Instance(widgets.DOMWidget, allow_none=True, default_value=None).tag(sync=True, **widget_serialization)
 
 class Div(ReactWidget):
@@ -70,10 +71,11 @@ class Checkable:
 class ReactGridLayout(ReactWidget):
     _model_name = Unicode('ReactGridLayoutModel').tag(sync=True)
     layout      = List(help="layout").tag(sync=True)
-    cols        = CInt(12, help="cols").tag(sync=True)
-    row_height  = CInt(30, help="row_height").tag(sync=True)
+    cols        = CInt(24, help="cols").tag(sync=True)
+    row_height  = CInt(48, help="row_height").tag(sync=True)
     width       = CInt(900, help="width").tag(sync=True)
     class_name  = Unicode('layout', help="class_name").tag(sync=True)
+    margin      = List([10, 10], minlen=2, maxlen=2, help="margin").tag(sync=True)
     draggable_handle = Unicode('', help="draggable_handle").tag(sync=True)
     draggable_cancel = Unicode('', help="draggable_cancel").tag(sync=True)
 
@@ -242,6 +244,7 @@ class AutoComplete(ReactWidget):
     _model_name = Unicode('AutoCompleteModel').tag(sync=True)
     data_source = List(help='data_source').tag(sync=True)
     placeholder = Unicode('Type something...', help='placeholder').tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Form(ReactWidget):
     _model_name = Unicode('FormModel').tag(sync=True)
@@ -253,31 +256,37 @@ class FormItem(ReactWidget):
     label       = Unicode('', allow_none=True, help='label').tag(sync=True)
 
 class Input(ReactWidget, ValueMixin):
-    _model_name = Unicode('InputModel').tag(sync=True)
+    _model_name   = Unicode('InputModel').tag(sync=True)
     default_value = Unicode('', allow_none=True, help="default_value").tag(sync=True)
-    type = Unicode(help="type").tag(sync=True)
+    type          = Unicode(help="type").tag(sync=True)
+    size          = Unicode('default', help="size of the widget").tag(sync=True)
 
 class TextArea(ReactWidget, ValueMixin):
     _model_name = Unicode('TextAreaModel').tag(sync=True)
     default_value = Unicode('', allow_none=True, help="default_value").tag(sync=True)
     type = Unicode(help="type").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Search(ReactWidget, ValueMixin):
     _model_name = Unicode('SearchModel').tag(sync=True)
     default_value = Unicode('', allow_none=True, help="default_value").tag(sync=True)
     type = Unicode(help="type").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class InputGroup(ReactWidget, ValueMixin):
     _model_name = Unicode('InputGroupModel').tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Password(ReactWidget, ValueMixin):
     _model_name = Unicode('PasswordModel').tag(sync=True)
     visibility_toggle = CBool(True, allow_none=True, help="selected or not").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class InputNumber(ReactWidget, ValueMixin):
     _model_name = Unicode('InputNumberModel').tag(sync=True)
     min = CFloat(help="min value").tag(sync=True)
     max = CFloat(help="max value").tag(sync=True)
+    size = Unicode('default', help="size of the widget").tag(sync=True)
 
 class ButtonBase(ReactWidget, ClickMixin):
     description = Unicode(help="Button label.").tag(sync=True)
@@ -310,30 +319,36 @@ class Switch(ButtonBase, ValueMixin):
     checked = CBool(None, allow_none=True, help="checked or not").tag(sync=True)
     checked_children = Unicode('On', help="content to be shown when the state is checked").tag(sync=True)
     un_checked_children = Unicode('Off', help="content to be shown when the state is unchecked").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Checkbox(ReactWidget):
     _model_name = Unicode('CheckboxModel').tag(sync=True)
     description = Unicode(help="Menu item").tag(sync=True)
     selected    = CBool(help="selected or not").tag(sync=True)
     checked     = CBool(help="checked or not").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Cascader(ReactWidget):
     _model_name = Unicode('CascaderModel').tag(sync=True)
     options     = List(help='options').tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Radio(ReactWidget, ValueMixin):
     _model_name = Unicode('RadioModel').tag(sync=True)
     default_checked = CBool(help="checked or not").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class RadioGroup(ReactWidget, ValueMixin):
     _model_name = Unicode('RadioGroupModel').tag(sync=True)
     name = Unicode('', allow_none=True, help='Set mode of Select').tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Select(ReactWidget, ValueMixin):
     _model_name = Unicode('SelectModel').tag(sync=True)
     description = Unicode(help="Select").tag(sync=True)
     options = Any(help="options of the widget").tag(sync=True, **widget_serialization)
     mode = Unicode('default', help='Set mode of Select').tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class SelectOption(ReactWidget, ValueMixin, Selectable):
     _model_name = Unicode('SelectOptionModel').tag(sync=True)
@@ -346,25 +361,30 @@ class Slider(ReactWidget, DefaultValueMixin, ValueMixin):
     min = CFloat(help="min value").tag(sync=True)
     max = CFloat(help="max value").tag(sync=True)
     range = CBool(help="range mode or not").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class DatePicker(ReactWidget, ValueMixin):
     _model_name = Unicode('DatePickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
     time_format = Unicode(help="time_format").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class MonthPicker(ReactWidget, ValueMixin):
     _model_name = Unicode('MonthPickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class RangePicker(ReactWidget, ValueMixin):
     _model_name = Unicode('RangePickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
     start_time = Unicode(help="start_time").tag(sync=True)
     end_time = Unicode(help="end_time").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class WeekPicker(ReactWidget, ValueMixin):
     _model_name = Unicode('WeekPickerModel').tag(sync=True)
     description = Unicode(help="description").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Transfer(ReactWidget):
     _model_name = Unicode('TransferModel').tag(sync=True)
@@ -462,9 +482,18 @@ class ANTListItem(ReactWidget):
 
 class Popover(ReactWidget):
     _model_name = Unicode('PopoverModel').tag(sync=True)
-    #content     =
+    extra       = Instance('ipyantd.core.ReactWidget', allow_none=True).tag(sync=True, **widget_serialization)
     title       = Unicode(help="title").tag(sync=True)
-    # TODO
+    arrow_point_at_center = CBool(False, help="arrow_point_at_center").tag(sync=True)
+    auto_adjust_overflow  = CBool(True, help="auto_adjust_overflow").tag(sync=True)
+    default_visible       = CBool(False, help="default_visible").tag(sync=True)
+    #get_popup_container = Unicode('body', help="get_popup_container").tag(sync=True)
+    mouse_enter_delay     = CFloat(0.1, help="mouse_enter_delay").tag(sync=True)
+    mouse_leave_delay     = CFloat(0.1, help="mouse_leave_delay").tag(sync=True)
+    overlay_class_name    = Unicode('', help="overlay_class_name").tag(sync=True)
+    overlay_style         = Dict({}, help="overlay_style").tag(sync=True)
+    placement             = Unicode('top', help="placement").tag(sync=True)
+    trigger               = Unicode('hover', help="trigger").tag(sync=True)
 
 class Statistic(ReactWidget):
     _model_name = Unicode('StatisticModel').tag(sync=True)
@@ -498,9 +527,18 @@ class TreeNode(ReactWidget):
     # TODO
 
 class Tooltip(ReactWidget):
-    _model_name = Unicode('TooltipModel').tag(sync=True)
-    title       = Unicode(help="title").tag(sync=True)
-    # TODO
+    _model_name           = Unicode('TooltipModel').tag(sync=True)
+    title                 = Unicode(help="title").tag(sync=True)
+    arrow_point_at_center = CBool(False, help="arrow_point_at_center").tag(sync=True)
+    auto_adjust_overflow  = CBool(True, help="auto_adjust_overflow").tag(sync=True)
+    default_visible       = CBool(False, help="default_visible").tag(sync=True)
+    #get_popup_container = Unicode('body', help="get_popup_container").tag(sync=True)
+    mouse_enter_delay     = CFloat(0.1, help="mouse_enter_delay").tag(sync=True)
+    mouse_leave_delay     = CFloat(0.1, help="mouse_leave_delay").tag(sync=True)
+    overlay_class_name    = Unicode('', help="overlay_class_name").tag(sync=True)
+    overlay_style         = Dict({}, help="overlay_style").tag(sync=True)
+    placement             = Unicode('top', help="placement").tag(sync=True)
+    trigger               = Unicode('hover', help="trigger").tag(sync=True)
 
 class Tag(ReactWidget):
     _model_name = Unicode('TagModel').tag(sync=True)
@@ -572,6 +610,16 @@ class Progress(ReactWidget):
 class Popconfirm(ReactWidget):
     _model_name = Unicode('PopconfirmModel').tag(sync=True)
     title = Unicode('Title', allow_none=True, help="title").tag(sync=True)
+    arrow_point_at_center = CBool(False, help="arrow_point_at_center").tag(sync=True)
+    auto_adjust_overflow  = CBool(True, help="auto_adjust_overflow").tag(sync=True)
+    default_visible       = CBool(False, help="default_visible").tag(sync=True)
+    #get_popup_container = Unicode('body', help="get_popup_container").tag(sync=True)
+    mouse_enter_delay     = CFloat(0.1, help="mouse_enter_delay").tag(sync=True)
+    mouse_leave_delay     = CFloat(0.1, help="mouse_leave_delay").tag(sync=True)
+    overlay_class_name    = Unicode('', help="overlay_class_name").tag(sync=True)
+    overlay_style         = Dict({}, help="overlay_style").tag(sync=True)
+    placement             = Unicode('top', help="placement").tag(sync=True)
+    trigger               = Unicode('hover', help="trigger").tag(sync=True)
 
 class Spin(ReactWidget):
     _model_name = Unicode('SpinModel').tag(sync=True)
@@ -617,3 +665,9 @@ class Divider(ReactWidget):
 class LocaleProvider(ReactWidget):
     _model_name = Unicode('LocaleProviderModel').tag(sync=True)
     locale      = Dict(help="locale").tag(sync=True)
+
+# ColorPicker
+class ColorPicker(ReactWidget):
+    _model_name = Unicode('ColorPickerModel').tag(sync=True)
+    color = Dict({'r':'241','g':'112','b':'19','a':'1'}, help="color").tag(sync=True)
+    
