@@ -258,7 +258,8 @@ class FormItem(ReactWidget):
 class Input(ReactWidget, ValueMixin):
     _model_name   = Unicode('InputModel').tag(sync=True)
     default_value = Unicode('', allow_none=True, help="default_value").tag(sync=True)
-    type          = Unicode(help="type").tag(sync=True)
+    disabled      = CBool(False, help="selected or not").tag(sync=True)
+    type          = Unicode('text', help="type").tag(sync=True)
     size          = Unicode('default', help="size of the widget").tag(sync=True)
 
 class TextArea(ReactWidget, ValueMixin):
@@ -273,8 +274,9 @@ class Search(ReactWidget, ValueMixin):
     type = Unicode(help="type").tag(sync=True)
     size        = Unicode('default', help="size of the widget").tag(sync=True)
 
-class InputGroup(ReactWidget, ValueMixin):
+class InputGroup(ReactWidget):
     _model_name = Unicode('InputGroupModel').tag(sync=True)
+    compact     = CBool(False, help="compact").tag(sync=True)
     size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class Password(ReactWidget, ValueMixin):
@@ -284,9 +286,14 @@ class Password(ReactWidget, ValueMixin):
 
 class InputNumber(ReactWidget, ValueMixin):
     _model_name = Unicode('InputNumberModel').tag(sync=True)
-    min = CFloat(help="min value").tag(sync=True)
-    max = CFloat(help="max value").tag(sync=True)
-    size = Unicode('default', help="size of the widget").tag(sync=True)
+    auto_focus  = CBool(False, help="auto_focus").tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    min         = CFloat(help="min value").tag(sync=True)
+    max         = CFloat(help="max value").tag(sync=True)
+    precision   = CInt(help="precision").tag(sync=True)
+    decimal_separator = Unicode('', help="decimal_separator").tag(sync=True)
+    size        = Unicode('default', help="size of the widget").tag(sync=True)
+    step        = CFloat(1, help="step").tag(sync=True)
 
 class ButtonBase(ReactWidget, ClickMixin):
     description = Unicode(help="Button label.").tag(sync=True)
@@ -333,6 +340,14 @@ class Cascader(ReactWidget):
     options     = List(help='options').tag(sync=True)
     size        = Unicode('default', help="size of the widget").tag(sync=True)
 
+class Rate(ReactWidget, ValueMixin):
+    _model_name = Unicode('RateModel').tag(sync=True)
+    allow_clear = CBool(False, help="allow_clear").tag(sync=True)
+    allow_half  = CBool(False, help="allow_half").tag(sync=True)
+    auto_focus  = CBool(False, help="auto_focus").tag(sync=True)
+    count       = CInt(5, help="count").tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+
 class Radio(ReactWidget, ValueMixin):
     _model_name = Unicode('RadioModel').tag(sync=True)
     default_checked = CBool(help="checked or not").tag(sync=True)
@@ -346,8 +361,8 @@ class RadioGroup(ReactWidget, ValueMixin):
 class Select(ReactWidget, ValueMixin):
     _model_name = Unicode('SelectModel').tag(sync=True)
     description = Unicode(help="Select").tag(sync=True)
-    options = Any(help="options of the widget").tag(sync=True, **widget_serialization)
-    mode = Unicode('default', help='Set mode of Select').tag(sync=True)
+    options     = Any(help="options of the widget").tag(sync=True, **widget_serialization)
+    mode        = Unicode('default', help='Set mode of Select').tag(sync=True)
     size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class SelectOption(ReactWidget, ValueMixin, Selectable):
@@ -358,9 +373,16 @@ class SelectOption(ReactWidget, ValueMixin, Selectable):
 
 class Slider(ReactWidget, DefaultValueMixin, ValueMixin):
     _model_name = Unicode('SliderModel').tag(sync=True)
-    min = CFloat(help="min value").tag(sync=True)
-    max = CFloat(help="max value").tag(sync=True)
-    range = CBool(help="range mode or not").tag(sync=True)
+    allow_clear = CBool(False, help="allow_clear").tag(sync=True)
+    disabled    = CBool(False, help="disabled").tag(sync=True)
+    dots        = CBool(False, help="dots").tag(sync=True)
+    included    = CBool(True, help="included").tag(sync=True)
+    min         = CFloat(0, help="min value").tag(sync=True)
+    max         = CFloat(100, help="max value").tag(sync=True)
+    range       = CBool(False, help="range mode or not").tag(sync=True)
+    step        = CFloat(1, help="step").tag(sync=True)
+    vertical    = CBool(False, help="vertical").tag(sync=True)
+    tooltip_visible = CBool(False, help="tooltip_visible").tag(sync=True)
     size        = Unicode('default', help="size of the widget").tag(sync=True)
 
 class DatePicker(ReactWidget, ValueMixin):

@@ -657,7 +657,7 @@ import { Input } from 'antd';
 export
     class InputModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, type: 'text' } };
-    autoProps = ['value', 'type', 'size']
+    autoProps = ['disabled', 'value', 'type', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Input, true))
 }
 
@@ -680,9 +680,9 @@ export
 // InputGroup
 export
     class InputGroupModel extends ReactModel {
-    defaults = () => { return { ...super.defaults(), value: null } };
-    autoProps = ['value', 'size']
-    reactComponent = () => ValueHandler(BasicWidget(Input.Group))
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['compact', 'size']
+    reactComponent = () => BasicWidget(Input.Group)
 }
 
 // Password
@@ -698,7 +698,8 @@ import { InputNumber } from 'antd';
 export
     class InputNumberModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, min: -Infinity, max: Infinity } };
-    autoProps = ['value', 'min', 'max', 'size']
+    autoProps = ['autoFocus', 'disabled', 'precision', 'value', 'decimalSeparator', 
+                 'min', 'max', 'step', 'size']
     reactComponent = () => ValueHandler(BasicWidget(InputNumber))
 }
 
@@ -775,6 +776,16 @@ export
     reactComponent = () => BasicWidget(Cascader, true)
 }
 
+// Rate
+import { Rate } from 'antd';
+export
+    class RateModel extends ReactModel {
+    defaults = () => { return { ...super.defaults() } };
+    autoProps = ['allowClear', 'allowHalf', 'autoFocus', 'count',
+                 'disabled', 'value']
+    reactComponent = () => ValueHandler(BasicWidget(Rate, true))
+}
+
 // Radio
 import { Radio } from 'antd';
 export
@@ -814,7 +825,9 @@ import { Slider } from 'antd';
 export
     class SliderModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), min: 0, max: 100, value: '', range: false } };
-    autoProps = ['min', 'max', 'value', 'range', 'size']
+    autoProps = ['allowClear', 'disabled', 'dots', 'included', 
+                 'min', 'max', 'value', 'range', 'step', 'vertical', 
+                 'tooltipVisible', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Slider))
 }
 
