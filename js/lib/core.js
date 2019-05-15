@@ -799,7 +799,7 @@ export
 export
     class RadioGroupModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null } };
-    autoProps = ['value', 'name']
+    autoProps = ['defaultValue', 'value', 'name', 'buttonStyle']
     reactComponent = () => ValueHandler(BasicWidget(Radio.Group))
 }
 
@@ -915,7 +915,8 @@ import { Collapse } from 'antd';
 export
     class CollapseModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = ['bordered', 'accordion', 'destroyInactivePanel']
+    autoProps = [/*'activeKey', */ 'defaultActiveKey','bordered', 'accordion', 
+                 'destroyInactivePanel']
     reactComponent = () => BasicWidget(Collapse)
 }
 

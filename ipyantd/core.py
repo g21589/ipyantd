@@ -355,8 +355,10 @@ class Radio(ReactWidget, ValueMixin):
 
 class RadioGroup(ReactWidget, ValueMixin):
     _model_name = Unicode('RadioGroupModel').tag(sync=True)
-    name = Unicode('', allow_none=True, help='Set mode of Select').tag(sync=True)
+    default_value = Unicode('', help='default_value').tag(sync=True)
+    name        = Unicode('', allow_none=True, help='Set mode of Select').tag(sync=True)
     size        = Unicode('default', help="size of the widget").tag(sync=True)
+    button_style= Unicode('outline', help="button_style").tag(sync=True)
 
 class Select(ReactWidget, ValueMixin):
     _model_name = Unicode('SelectModel').tag(sync=True)
@@ -445,6 +447,8 @@ class Comment(ReactWidget):
 
 class Collapse(ReactWidget):
     _model_name = Unicode('CollapseModel').tag(sync=True)
+    #active_key  = Unicode('', help="active_key").tag(sync=True)
+    default_active_key = Unicode('', help="default_active_key").tag(sync=True)
     bordered    = CBool(True, help="bordered").tag(sync=True)
     accordion   = CBool(False, help="accordion").tag(sync=True)
     destroy_inactive_panel = CBool(False, help="destroy_inactive_panel").tag(sync=True)
