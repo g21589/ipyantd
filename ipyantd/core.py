@@ -448,7 +448,7 @@ class Comment(ReactWidget):
 class Collapse(ReactWidget):
     _model_name = Unicode('CollapseModel').tag(sync=True)
     #active_key  = Unicode('', help="active_key").tag(sync=True)
-    default_active_key = Unicode('', help="default_active_key").tag(sync=True)
+    #default_active_key = Unicode('', help="default_active_key").tag(sync=True)
     bordered    = CBool(True, help="bordered").tag(sync=True)
     accordion   = CBool(False, help="accordion").tag(sync=True)
     destroy_inactive_panel = CBool(False, help="destroy_inactive_panel").tag(sync=True)

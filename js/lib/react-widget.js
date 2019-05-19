@@ -106,13 +106,13 @@ export
     getChildWidgetComponent(name) {
         let widget = this.get(name);
         if (!widget) {
-            console.log('Null widget, do nothing')
+            console.log('getChildWidgetComponent > Null widget, do nothing')
             return null;
         } else if (widget instanceof ReactModel) {
-            console.log('React widget')
+            console.log('getChildWidgetComponent > React widget')
             return widget.createWrappedReactElement()
         } else {
-            console.log('Not React widget, using BlackboxWidget')
+            console.log('getChildWidgetComponent > Not React widget, using BlackboxWidget')
             return <BlackboxWidget widget={widget}></BlackboxWidget>
         }
     }
@@ -120,10 +120,10 @@ export
         let widgetList = this.get(name);
         return widgetList.map((widget) => {
             if (widget instanceof ReactModel) {
-                console.log('React widget')
+                console.log('getChildWidgetComponentList > React widget')
                 return widget.createWrappedReactElement({ key: widget.cid })
             } else {
-                console.log('Not React widget, using BlackboxWidget')
+                console.log('getChildWidgetComponentList > Not React widget, using BlackboxWidget')
                 return <BlackboxWidget widget={widget}></BlackboxWidget>
             }
         });

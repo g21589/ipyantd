@@ -698,8 +698,8 @@ import { InputNumber } from 'antd';
 export
     class InputNumberModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), value: null, min: -Infinity, max: Infinity } };
-    autoProps = ['autoFocus', 'disabled', 'precision', 'value', 'decimalSeparator', 
-                 'min', 'max', 'step', 'size']
+    autoProps = ['autoFocus', 'disabled', 'precision', 'value', 'decimalSeparator',
+        'min', 'max', 'step', 'size']
     reactComponent = () => ValueHandler(BasicWidget(InputNumber))
 }
 
@@ -782,7 +782,7 @@ export
     class RateModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['allowClear', 'allowHalf', 'autoFocus', 'count',
-                 'disabled', 'value']
+        'disabled', 'value']
     reactComponent = () => ValueHandler(BasicWidget(Rate, true))
 }
 
@@ -825,9 +825,9 @@ import { Slider } from 'antd';
 export
     class SliderModel extends ReactModel {
     defaults = () => { return { ...super.defaults(), min: 0, max: 100, value: '', range: false } };
-    autoProps = ['allowClear', 'disabled', 'dots', 'included', 
-                 'min', 'max', 'value', 'range', 'step', 'vertical', 
-                 'tooltipVisible', 'size']
+    autoProps = ['allowClear', 'disabled', 'dots', 'included',
+        'min', 'max', 'value', 'range', 'step', 'vertical',
+        'tooltipVisible', 'size']
     reactComponent = () => ValueHandler(BasicWidget(Slider))
 }
 
@@ -910,13 +910,49 @@ export
     reactComponent = () => BasicWidget(Comment)
 }
 
+function CollapseWidget() {
+    return class extends BackboneWidget {
+        onChangeHandler = (active_key) => {
+            console.log('CollapseWidget > onChangeHandler()', active_key);
+            this.props.model.set('active_key', active_key);
+            this.props.model.save_changes();
+        }
+        render() {
+            console.log('CollapseWidget > render() 1: ', this.props);
+            let { model, ...props } = this.stateProps();
+
+            console.log('CollapseWidget > render() 2: ', props);
+            return <Collapse {...props} onChange={this.onChangeHandler}></Collapse>
+        }
+    }
+}
+
+function CollapsePanelWidget() {
+    return class extends BackboneWidget {
+        render() {
+            console.log('CollapsePanelWidget > render() 1: ', this.props);
+            let { model, ...props } = this.stateProps();
+
+            console.log('CollapsePanelWidget > render() 2: ', props);
+            return (
+                <Collapse.Panel
+                    {...props}
+                >
+                    {props.children}
+                </Collapse.Panel>
+            )
+        }
+    }
+}
+
 // Collapse
 import { Collapse } from 'antd';
 export
     class CollapseModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
-    autoProps = [/*'activeKey', */ 'defaultActiveKey','bordered', 'accordion', 
-                 'destroyInactivePanel']
+    autoProps = [/*'activeKey', 'defaultActiveKey',*/ 'bordered', 'accordion',
+        'destroyInactivePanel']
+    //reactComponent = () => CollapseWidget(Collapse)
     reactComponent = () => BasicWidget(Collapse)
 }
 
@@ -925,6 +961,7 @@ export
     class CollapsePanelModel extends ReactModel {
     defaults = () => { return { ...super.defaults() } };
     autoProps = ['disabled', 'forceRender', 'header', 'key', 'showArrow']
+    //reactComponent = () => CollapsePanelWidget(Collapse.Panel)
     reactComponent = () => BasicWidget(Collapse.Panel)
 }
 
